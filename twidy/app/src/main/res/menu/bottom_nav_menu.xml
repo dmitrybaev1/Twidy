@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_recommendations"
+        android:title="@string/title_recommends" />
+
+    <item
+        android:id="@+id/navigation_chats"
+        android:title="@string/title_chats" />
+
+    <item
+        android:id="@+id/navigation_calls"
+        android:title="@string/title_calls" />
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:title="@string/title_settings" />
+
+</menu>
