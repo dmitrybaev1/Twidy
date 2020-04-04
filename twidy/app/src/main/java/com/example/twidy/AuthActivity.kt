@@ -1,5 +1,6 @@
 package com.example.twidy
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,10 +12,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.twidy.databinding.ActivityAuthBinding
 //TODO переделать многое на binding
-class AuthActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class AuthActivity : AppCompatActivity() {
     private lateinit var authVm: AuthViewModel
     private lateinit var viewFlipper: ViewFlipper
     private lateinit var mainLayout: LinearLayout
+    private lateinit var firstStepLayout: LinearLayout
+    private lateinit var secondStepLayout: LinearLayout
     private lateinit var phoneEditText: EditText
     private lateinit var codeEditText: EditText
     private lateinit var getCodeButton: Button
@@ -31,13 +34,14 @@ class AuthActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         binding.auth = authVm
         viewFlipper = findViewById(R.id.view_flipper)
         mainLayout = findViewById(R.id.main_layout)
+        firstStepLayout = findViewById(R.id.firststep_layout)
+        secondStepLayout = findViewById(R.id.secondstep_layout)
         getCodeButton = findViewById(R.id.getcode_button)
         nextCheckButton = findViewById(R.id.nextcheck_button)
         phoneEditText = findViewById(R.id.phone_edittext)
         codeEditText = findViewById(R.id.code_edittext)
         countryTextView = findViewById(R.id.country_textview)
         phoneCodeSpinner = findViewById(R.id.phone_spinner)
-        phoneCodeSpinner.onItemSelectedListener = this
         phoneEditText.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
 
@@ -86,7 +90,6 @@ class AuthActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         })
         authVm.countries.observe(this, Observer {staticData ->
-            //TODO: тут сформировать спиннер со странами
             phoneCodeAdapter = PhoneCodeSpinnerAdapter(this,R.layout.code_spinner_item,staticData.result.country)
             phoneCodeSpinner.adapter = phoneCodeAdapter
             authVm.getLocation()
@@ -94,13 +97,19 @@ class AuthActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         authVm.location.observe(this, Observer {locationData ->
             phoneCodeSpinner.setSelection(phoneCodeAdapter.getItemPosition(locationData.result.location))
         })
-    }
-
-    override fun onNothingSelected(p0: AdapterView<*>?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        countryTextView.text = phoneCodeAdapter.getItem(p2)?.name
+        authVm.auth.observe(this, Observer { authData ->
+            firstStepLayout.visibility = View.GONE
+            secondStepLayout.visibility = View.VISIBLE
+        })
+        authVm.spinnerItemPosition.observe(this, Observer {
+            authVm.phoneCountry.value = phoneCodeAdapter.getItem(it)
+            countryTextView.text = phoneCodeAdapter.getItem(it)?.name
+        })
+        authVm.confirm.observe(this, Observer {confirmData ->
+            val intent = Intent(this,MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.putExtra("authConfirmResult",confirmData.result)
+            startActivity(intent)
+        })
     }
 }

@@ -1,6 +1,7 @@
 package com.example.twidy
 
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface AuthAPI {
@@ -8,4 +9,8 @@ interface AuthAPI {
     suspend fun getStatic(@Query("fields")fields: String): StaticData
     @GET("utils.getLocation")
     suspend fun getLocation(): LocationData
+    @GET("auth")
+    suspend fun auth(@Query("phone")phone: String): AuthData
+    @POST("auth.confirm")
+    suspend fun confirm(@Query("phone")phone: String,@Query("i")id: String,@Query("c")code: String): ConfirmData
 }
