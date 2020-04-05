@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.twidy.MainActivity
 import com.example.twidy.R
 
 class CallsFragment : Fragment() {
@@ -23,6 +24,8 @@ class CallsFragment : Fragment() {
                 ViewModelProviders.of(this).get(CallsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_calls, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
+        val toolbar = (activity as MainActivity).toolbar
+        toolbar.title = resources.getString(R.string.title_calls)
         callsViewModel.text.observe(this, Observer {
             textView.text = it
         })

@@ -1,7 +1,21 @@
 <resources>
-    <string name="app_name">twidy</string>
-    <string name="title_recommends">Recoms</string>
-    <string name="title_chats">Chats</string>
-    <string name="title_calls">Calls</string>
-    <string name="title_settings">Settings</string>
+    <string name="app_name">Twidy</string>
+    <string name="title_recommends">Главная</string>
+    <string name="title_chats">Чаты</string>
+    <string name="title_calls">Звонки</string>
+    <string name="title_settings">Настройки</string>
+
+    <!--ERRORS-->
+    <string name="host_error">Ошибка подключения к хосту</string>
+    <string name="static_data_error">Ошибка получения статичных данных</string>
+    <string name="location_error">Ошибка получения местоположения</string>
+    <string name="auth_error">Ошибка авторизации</string>
+
+    <string name="skip_slide">Skip</string>
+    <string name="title_authorization">Авторизация</string>
+    <string name="check_country_code">Проверьте код страны и введите свой номер телефона</string>
+    <string name="get_code">Получить код проверки</string>
+    <string name="checkcode">Код проверки</string>
+    <string name="we_sent_code">Мы отправили код проверки на указанный вами телефон</string>
+    <string name="next">Далее</string>
 </resources>

@@ -89,6 +89,9 @@ class AuthActivity : AppCompatActivity() {
         authVm.error.observe(this, Observer {
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         })
+        authVm.apiError.observe(this, Observer {
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+        })
         authVm.countries.observe(this, Observer {staticData ->
             phoneCodeAdapter = PhoneCodeSpinnerAdapter(this,R.layout.code_spinner_item,staticData.result.country)
             phoneCodeSpinner.adapter = phoneCodeAdapter

@@ -13,15 +13,21 @@ import java.net.ConnectException
 import kotlin.coroutines.CoroutineContext
 
 class AuthViewModel : ViewModel() {
-    private var count = 0;
+    private var count = 0
+
     private val _next = MutableLiveData<Int>()
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String> = _error
+    val next: LiveData<Int> = _next
+
+    private val _error = MutableLiveData<Int>()
+    val error: LiveData<Int> = _error
+
+    private val _apiError = MutableLiveData<String>()
+    val apiError: LiveData<String> = _apiError
+
     val phoneNumber = MutableLiveData<String>()
     val phoneCountry = MutableLiveData<Country>()
     val codeNumber =  MutableLiveData<String>()
     val spinnerItemPosition = MutableLiveData<Int>()
-    val next: LiveData<Int> = _next
 
     private val _countries = MutableLiveData<StaticData>()
     private lateinit var staticData: StaticData
@@ -41,6 +47,7 @@ class AuthViewModel : ViewModel() {
 
     private lateinit var phone: String
     private lateinit var id: String
+
     private val retrofit = RetrofitBuilder.build()
     private val job = Job()
     private val context: CoroutineContext
@@ -63,13 +70,13 @@ class AuthViewModel : ViewModel() {
                 if(staticData.status == "ok")
                     _countries.postValue(staticData)
                 else
-                    _error.postValue(staticData.message)
+                    _apiError.postValue(staticData.message)
             }
             catch (ex: ConnectException){
-                _error.postValue("Ошибка подключения к хосту")
+                _error.postValue(R.string.host_error)
             }
             catch (ex: HttpException){
-                _error.postValue("Ошибка получения статичных данных")
+                _error.postValue(R.string.static_data_error)
             }
         }
     }
@@ -81,13 +88,13 @@ class AuthViewModel : ViewModel() {
                 if(locationData.status == "ok")
                     _location.postValue(locationData)
                 else
-                    _error.postValue(locationData.message)
+                    _apiError.postValue(locationData.message)
             }
             catch (ex: ConnectException){
-                _error.postValue("Ошибка подключения к хосту")
+                _error.postValue(R.string.host_error)
             }
             catch (ex: HttpException){
-                _error.postValue("Ошибка получения местоположения")
+                _error.postValue(R.string.location_error)
             }
         }
     }
@@ -102,13 +109,13 @@ class AuthViewModel : ViewModel() {
                     _auth.postValue(authData)
                 }
                 else
-                    _error.postValue(authData.message)
+                    _apiError.postValue(authData.message)
             }
             catch (ex: ConnectException){
-                _error.postValue("Ошибка подключения к хосту")
+                _error.postValue(R.string.host_error)
             }
             catch (ex: HttpException){
-                _error.postValue("Ошибка авторизации")
+                _error.postValue(R.string.auth_error)
             }
         }
     }
@@ -122,13 +129,13 @@ class AuthViewModel : ViewModel() {
                     _confirm.postValue(confirmData)
                 }
                 else
-                    _error.postValue(confirmData.message)
+                    _apiError.postValue(confirmData.message)
             }
             catch (ex: ConnectException){
-                _error.postValue("Ошибка подключения к хосту")
+                _error.postValue(R.string.host_error)
             }
             catch (ex: HttpException){
-                _error.postValue("Ошибка авторизации")
+                _error.postValue(R.string.auth_error)
             }
         }
     }

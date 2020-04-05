@@ -3,18 +3,22 @@
 
     <item
         android:id="@+id/navigation_recommendations"
-        android:title="@string/title_recommends" />
+        android:title=""
+        android:icon="@drawable/ic_home_24px"/>
 
     <item
         android:id="@+id/navigation_chats"
-        android:title="@string/title_chats" />
+        android:title=""
+        android:icon="@drawable/ic_chat_bubble_outline_24px"/>
 
     <item
         android:id="@+id/navigation_calls"
-        android:title="@string/title_calls" />
+        android:title=""
+        android:icon="@drawable/ic_phone_24px"/>
 
     <item
         android:id="@+id/navigation_settings"
-        android:title="@string/title_settings" />
+        android:title=""
+        android:icon="@drawable/ic_build_24px"/>
 
 </menu>

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.twidy.MainActivity
 import com.example.twidy.R
 
 
@@ -23,6 +24,8 @@ class SettingsFragment : Fragment() {
             ViewModelProviders.of(this).get(SettingsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
         val textView: TextView = root.findViewById(R.id.text_home2)
+        val toolbar = (activity as MainActivity).toolbar
+        toolbar.title = resources.getString(R.string.title_settings)
         settingsViewModel.text.observe(this, Observer {
             textView.text = it
         })

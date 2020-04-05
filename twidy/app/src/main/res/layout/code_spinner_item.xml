@@ -10,8 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="TextView"
-        android:textColor="#4e3f6f"
+        android:textColor="@color/colorText"
         android:textSize="18sp" />
 
 </LinearLayout>
