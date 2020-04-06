@@ -25,7 +25,7 @@ class CallsFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_calls, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
         val toolbar = (activity as MainActivity).toolbar
-        toolbar.title = resources.getString(R.string.title_calls)
+        //toolbar.title = resources.getString(R.string.title_calls)
         callsViewModel.text.observe(this, Observer {
             textView.text = it
         })

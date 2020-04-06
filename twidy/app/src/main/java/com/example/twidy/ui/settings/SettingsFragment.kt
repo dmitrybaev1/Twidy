@@ -25,7 +25,7 @@ class SettingsFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
         val textView: TextView = root.findViewById(R.id.text_home2)
         val toolbar = (activity as MainActivity).toolbar
-        toolbar.title = resources.getString(R.string.title_settings)
+        //toolbar.title = resources.getString(R.string.title_settings)
         settingsViewModel.text.observe(this, Observer {
             textView.text = it
         })

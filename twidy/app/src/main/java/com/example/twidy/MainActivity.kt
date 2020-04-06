@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 
 class MainActivity : AppCompatActivity() {
     lateinit var toolbar: Toolbar
+    var isInEditModeChats: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,7 +26,10 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_recommendations, R.id.navigation_chats, R.id.navigation_calls, R.id.navigation_settings))
         navView.setupWithNavController(navController)
         setSupportActionBar(toolbar)
+        toolbar.setupWithNavController(navController,appBarConfiguration)
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
 
+        }
     }
 
 }

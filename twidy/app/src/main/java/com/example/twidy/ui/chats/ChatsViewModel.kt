@@ -11,34 +11,47 @@ class ChatsViewModel : ViewModel() {
 
     val resultConfirmData = MutableLiveData<ResultConfirmData>()
 
-    private val _chatsAdapter = MutableLiveData<ChatsAdapter>()
-    val chatsAdapter: LiveData<ChatsAdapter> = _chatsAdapter
+    private val _listLiveData = MutableLiveData<ArrayList<ChatItem>>()
+    val listLiveData: LiveData<ArrayList<ChatItem>> = _listLiveData
 
-    private val list: ArrayList<ChatItem> = ArrayList()
+    private lateinit var list: ArrayList<ChatItem>
     private lateinit var searchList: ArrayList<ChatItem>
     fun loadChats(){
         //загружаем чаты
-        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200))
-        list.add(ChatItem("","Nikita Boiv","AAAAmatebalsukablyaaaaaa",20))
-        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200))
-        list.add(ChatItem("","Nikita Boiv","AAAA mat ebal suka blyaaaaaa",20))
-        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200))
-        list.add(ChatItem("","Nikita Boiv","AAAA mat ebal suka blyaaaaaa",20))
-        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200))
-        list.add(ChatItem("","Nikita Boiv","AAAA mat ebal suka blyaaaaaa",20))
-        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200))
-        list.add(ChatItem("","Nikita Boiv","AAAA mat ebal suka blyaaaaaa",20))
-        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200))
-        list.add(ChatItem("","Nikita Boiv","AAAA mat ebal suka blyaaaaaa",20))
-        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200))
-        list.add(ChatItem("","Nikita Boiv","AAAA mat ebal suka blyaaaaaa",20))
-        _chatsAdapter.value = ChatsAdapter(list)
+        list = ArrayList()
+        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200,false,false))
+        list.add(ChatItem("","Nikita Boiv","AAAAmatebalsukablyaaaaaa",20,false,false))
+        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200,false,false))
+        list.add(ChatItem("","Nikita Boiv","AAAA mat ebal suka blyaaaaaa",20,false,false))
+        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200,false,false))
+        list.add(ChatItem("","Nikita Boiv","AAAA mat ebal suka blyaaaaaa",20,false,false))
+        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200,false,false))
+        list.add(ChatItem("","Nikita Boiv","AAAA mat ebal suka blyaaaaaa",20,false,false))
+        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200,false,false))
+        list.add(ChatItem("","Nikita Boiv","AAAA mat ebal suka blyaaaaaa",20,false,false))
+        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200,false,false))
+        list.add(ChatItem("","Nikita Boiv","AAAA mat ebal suka blyaaaaaa",20,false,false))
+        list.add(ChatItem("","Dmitry Baev","Hello my friend!",200,false,false))
+        list.add(ChatItem("","Nikita Boiv","AAAA mat ebal suka blyaaaaaa",20,false,false))
+        _listLiveData.value = list
     }
     fun search(s: String){
         searchList = list.filter { x -> x.personName.contains(s,true) } as ArrayList<ChatItem>
-        _chatsAdapter.value = ChatsAdapter(searchList)
+        _listLiveData.value = searchList
+    }
+    fun delete(){
+        list = list.filter { x -> !x.checked } as ArrayList<ChatItem>
+        _listLiveData.value = list
+    }
+    fun archive(){
+        list = list.filter { x -> !x.checked } as ArrayList<ChatItem>
+        _listLiveData.value = list
+    }
+    fun checkAll(){
+        list.forEach { x -> x.checked=true }
+        _listLiveData.value = list
     }
     fun toSourceList(){
-        _chatsAdapter.value = ChatsAdapter(list)
+        _listLiveData.value = list
     }
 }

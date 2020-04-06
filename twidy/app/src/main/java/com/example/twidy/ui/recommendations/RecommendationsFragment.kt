@@ -25,7 +25,7 @@ class RecommendationsFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_recommendations, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
         val toolbar = (activity as MainActivity).toolbar
-        toolbar.title = resources.getString(R.string.title_recommends)
+        //toolbar.title = resources.getString(R.string.title_recommends)
         recommendationsViewModel.text.observe(this, Observer {
             textView.text = it
         })
