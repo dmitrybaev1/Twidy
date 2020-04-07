@@ -2,15 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/delete"
+        android:id="@+id/archive_bar"
         app:showAsAction="always|collapseActionView"
-        android:title="Delete"/>
+        android:title="Archive"
+        android:icon="@drawable/baseline_archive_white_18dp"/>
     <item
-        android:id="@+id/archive"
-        app:showAsAction="always|collapseActionView"
-        android:title="Archive"/>
-    <item
-        android:id="@+id/checkAll"
+        android:id="@+id/checkAll_bar"
         app:showAsAction="never"
-        android:title="Выбрать все"/>
+        android:title="@string/check_all"/>
 </menu>

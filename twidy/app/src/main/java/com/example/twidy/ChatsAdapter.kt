@@ -55,8 +55,8 @@ class ChatsAdapter(var list: ArrayList<ChatItem>,var activity: MainActivity) : R
 
     fun changeMode(){
         if (!activity.isInEditModeChats) {
-            //checkedMode = true
             activity.isInEditModeChats = true
+            activity.navView.visibility = View.GONE
             activity.setSupportActionBar(activity.toolbar)
             activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
             for (i in list.indices) {
@@ -64,8 +64,8 @@ class ChatsAdapter(var list: ArrayList<ChatItem>,var activity: MainActivity) : R
                 notifyItemChanged(i)
             }
         } else {
-            //checkedMode = false
             activity.isInEditModeChats = false
+            activity.navView.visibility = View.VISIBLE
             activity.setSupportActionBar(activity.toolbar)
             activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
             for (i in list.indices) {

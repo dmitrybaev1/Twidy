@@ -104,9 +104,13 @@ class AuthViewModel : ViewModel() {
             try{
                 phone = phoneCountry.value?.phonecode.toString()+phoneNumber.value
                 authData = authApi.auth(phone)
-                if(locationData.status == "ok") {
-                    id=authData.result.i
-                    _auth.postValue(authData)
+                if(authData.status == "ok") {
+                    if(authData.result._d.status=="ERROR")
+                        _apiError.postValue(authData.result._d.status_text)
+                    else {
+                        id = authData.result.i
+                        _auth.postValue(authData)
+                    }
                 }
                 else
                     _apiError.postValue(authData.message)

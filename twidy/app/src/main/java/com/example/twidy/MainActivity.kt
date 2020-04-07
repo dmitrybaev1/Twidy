@@ -14,10 +14,11 @@ import androidx.navigation.ui.setupWithNavController
 class MainActivity : AppCompatActivity() {
     lateinit var toolbar: Toolbar
     var isInEditModeChats: Boolean = false
+    lateinit var navView: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        navView = findViewById(R.id.nav_view)
         toolbar = findViewById(R.id.toolbar)
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.setupWithNavController(navController,appBarConfiguration)
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            //менять что-нибудь если был переход на другой фрагмент
 
         }
     }
