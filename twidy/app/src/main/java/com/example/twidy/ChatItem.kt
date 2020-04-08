@@ -2,9 +2,10 @@ package com.example.twidy
 
 data class ChatItem (
     var avatar: String,
-    var personName: String,
+    var name: String,
     var lastMessage: String,
-    var cost: Int,
+    var newMessages: Int,
     var checked: Boolean,
-    var inCheckedMode: Boolean
+    var inCheckedMode: Boolean,
+    var type: String
 )

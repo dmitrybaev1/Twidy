@@ -40,32 +40,16 @@ class ChatsViewModel : ViewModel() {
 
     fun getChats(){
         //загружаем чаты
-        vmScope.launch {
+        /*vmScope.launch {
             val api = retrofit.create(MainAPI::class.java)
             try {
                 chatsData = api.getChats("")
                 if(chatsData.status=="ok") {
                     //формировать лист чатов
-                    chatsList = ArrayList()
-                    chatsList.add(ChatItem("", "Name Surname", "Last message example",5,false,false))
-                    chatsList.add(ChatItem("", "Name Surname", "Last message example",10,false,false))
-                    chatsList.add(ChatItem("", "Name Surname", "Last message example",100,false,false))
                     _chatsListLiveData.postValue(chatsList)
                 }
                 else {
                     _apiError.postValue(chatsData.message)
-                    //УБРАТЬ
-                    chatsList = ArrayList()
-                    chatsList.add(ChatItem("", "Name Surname", "Last message example",5,false,false))
-                    chatsList.add(ChatItem("", "Name Surname", "Last message example",10,false,false))
-                    chatsList.add(ChatItem("", "Name Surname", "Last message example",100,false,false))
-                    chatsList.add(ChatItem("", "Name Surname", "Last message example",5,false,false))
-                    chatsList.add(ChatItem("", "Name Surname", "Last message example",10,false,false))
-                    chatsList.add(ChatItem("", "Name Surname", "Last message example",100,false,false))
-                    chatsList.add(ChatItem("", "Name Surname", "Last message example",5,false,false))
-                    chatsList.add(ChatItem("", "Name Surname", "Last message example",10,false,false))
-                    chatsList.add(ChatItem("", "Name Surname", "Last message example",100,false,false))
-                    _chatsListLiveData.postValue(chatsList)
                 }
             }
             catch (ex: ConnectException){
@@ -74,33 +58,40 @@ class ChatsViewModel : ViewModel() {
             catch (ex: HttpException){
                 _error.postValue(R.string.chats_error)
             }
-        }
-
+        }*/
+        chatsList = ArrayList()
+        chatsList.add(ChatItem("","Name Surname","Last message",1,false,false,"Chat"))
+        chatsList.add(ChatItem("","Name Surname","Last message",3,false,false,"Chat"))
+        chatsList.add(ChatItem("","Name Surname","Last message",0,false,false,"Chat"))
+        chatsList.add(ChatItem("","Name Surname","Last message",1,false,false,"Chat"))
+        chatsList.add(ChatItem("","Channel Name","Last message",15,false,false,"Channel"))
+        chatsList.add(ChatItem("","Name Surname","Last message",0,false,false,"Chat"))
+        _chatsListLiveData.value = chatsList
     }
     fun getFavoriteAll(){
         //загружаем избранных юзеров
         favoriteList = ArrayList()
-        favoriteList.add(FavoriteItem("","Name Surname","I am a beauty bloger so follow to me",true,true))
-        favoriteList.add(FavoriteItem("","Name Surname","I am a beauty bloger so follow to me",true,true))
-        favoriteList.add(FavoriteItem("","Name Surname","I am a beauty bloger so follow to me",true,true))
+        favoriteList.add(FavoriteItem("","Favorite All","Description",true,true))
+        favoriteList.add(FavoriteItem("","Favorite All","Description",true,true))
+        favoriteList.add(FavoriteItem("","Favorite All","Description",true,true))
         _favoriteListLiveData.value = favoriteList
     }
 
     fun getFavoriteVideoAccepted(){
         //загружаем избранных юзеров, у кого разрешено видео
         favoriteList = ArrayList()
-        favoriteList.add(FavoriteItem("","Name Surname","I am a beauty bloger so follow to me",true,true))
-        favoriteList.add(FavoriteItem("","Name Surname","I am a beauty bloger so follow to me",true,true))
-        favoriteList.add(FavoriteItem("","Name Surname","I am a beauty bloger so follow to me",true,true))
+        favoriteList.add(FavoriteItem("","Favorite Video","Description",true,true))
+        favoriteList.add(FavoriteItem("","Favorite Video","Description",true,true))
+        favoriteList.add(FavoriteItem("","Favorite Video","Description",true,true))
         _favoriteListLiveData.value = favoriteList
     }
 
     fun getFavoriteAudioAccepted(){
         //загружаем избранных юзеров, у кого разрешено аудио
         favoriteList = ArrayList()
-        favoriteList.add(FavoriteItem("","Name Surname","I am a beauty bloger so follow to me",true,true))
-        favoriteList.add(FavoriteItem("","Name Surname","I am a beauty bloger so follow to me",true,true))
-        favoriteList.add(FavoriteItem("","Name Surname","I am a beauty bloger so follow to me",true,true))
+        favoriteList.add(FavoriteItem("","Favorite Audio","Description",true,true))
+        favoriteList.add(FavoriteItem("","Favorite Audio","Description",true,true))
+        favoriteList.add(FavoriteItem("","Favorite Audio","Description",true,true))
         _favoriteListLiveData.value = favoriteList
     }
     fun searchFavorite(s: String){
@@ -111,7 +102,7 @@ class ChatsViewModel : ViewModel() {
             _favoriteListLiveData.value = searchList
     }
     fun searchChats(s: String){
-        val searchList = chatsList.filter { x -> x.personName.contains(s,true) } as ArrayList<ChatItem>
+        val searchList = chatsList.filter { x -> x.name.contains(s,true) } as ArrayList<ChatItem>
         _chatsListLiveData.value = searchList
     }
     fun archiveChats(){

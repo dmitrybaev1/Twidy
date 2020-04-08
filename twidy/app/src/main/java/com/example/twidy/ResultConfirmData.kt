@@ -9,5 +9,5 @@ data class ResultConfirmData(
     var call_id: String,
     var created: Int,
     var expires: Int,
-    var user: User
+    var localUser: LocalUser
 ) : Parcelable

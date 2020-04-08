@@ -18,9 +18,13 @@ class ChatsAdapter(var list: ArrayList<ChatItem>,var activity: MainActivity) : R
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: ChatsHolder, position: Int) {
-        holder.personNameView.text = list[position].personName
+        if(list[position].type=="Channel")
+            holder.newMessagesView.background = activity.resources.getDrawable(R.drawable.channel_new_textview)
+        if(list[position].newMessages==0)
+            holder.newMessagesView.visibility = View.GONE
+        holder.personNameView.text = list[position].name
         holder.lastMessageView.text = list[position].lastMessage
-        holder.costView.text = list[position].cost.toString()+"$"
+        holder.newMessagesView.text = list[position].newMessages.toString()
         if(list[position].inCheckedMode)
             holder.checkBox.visibility = View.VISIBLE
         else
@@ -42,14 +46,14 @@ class ChatsAdapter(var list: ArrayList<ChatItem>,var activity: MainActivity) : R
         var avatarView: RoundedImageView
         var personNameView: TextView
         var lastMessageView: TextView
-        var costView: TextView
+        var newMessagesView: TextView
         constructor(v: View) : super(v) {
             view = v
             checkBox = v.findViewById(R.id.checkBox)
             avatarView = v.findViewById(R.id.avatar_view)
             personNameView = v.findViewById(R.id.person_name_view)
             lastMessageView = v.findViewById(R.id.last_message_view)
-            costView = v.findViewById(R.id.cost_view)
+            newMessagesView = v.findViewById(R.id.cost_view)
         }
     }
 
