@@ -1,5 +1,5 @@
 package com.example.twidy
 
-class ResultFavoriteData {
-
-}
+data class ResultFavoriteData (
+    var listOf: ArrayList<User>
+)

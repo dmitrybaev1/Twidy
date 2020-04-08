@@ -37,7 +37,7 @@ class ChatsViewModel : ViewModel() {
     private val context: CoroutineContext
         get() = Dispatchers.Main + job
     private val vmScope = CoroutineScope(context)
-
+    //МЕТОД С ВЫЗОВОМ API(chat.getLists и chat.getMessages, после чего формировать объект чата(ChatItem))
     fun getChats(){
         //загружаем чаты
         /*vmScope.launch {
@@ -60,38 +60,39 @@ class ChatsViewModel : ViewModel() {
             }
         }*/
         chatsList = ArrayList()
-        chatsList.add(ChatItem("","Name Surname","Last message",1,false,false,"Chat"))
-        chatsList.add(ChatItem("","Name Surname","Last message",3,false,false,"Chat"))
-        chatsList.add(ChatItem("","Name Surname","Last message",0,false,false,"Chat"))
-        chatsList.add(ChatItem("","Name Surname","Last message",1,false,false,"Chat"))
-        chatsList.add(ChatItem("","Channel Name","Last message",15,false,false,"Channel"))
-        chatsList.add(ChatItem("","Name Surname","Last message",0,false,false,"Chat"))
+        chatsList.add(ChatItem(0,"","Name Surname","Last message",1,false,false,"Chat"))
+        chatsList.add(ChatItem(1,"","Name Surname","Last message",3,false,false,"Chat"))
+        chatsList.add(ChatItem(2,"","Name Surname","Last message",0,false,false,"Chat"))
+        chatsList.add(ChatItem(3,"","Name Surname","Last message",1,false,false,"Chat"))
+        chatsList.add(ChatItem(4,"","Channel Name","Last message",15,false,false,"Channel"))
+        chatsList.add(ChatItem(5,"","Name Surname","Last message",0,false,false,"Chat"))
         _chatsListLiveData.value = chatsList
     }
+    //МЕТОД С ВЫЗОВОМ API(вызвать user.getFavorite и сформировать объект юзера(FavoriteItem))
     fun getFavoriteAll(){
         //загружаем избранных юзеров
         favoriteList = ArrayList()
-        favoriteList.add(FavoriteItem("","Favorite All","Description",true,true))
-        favoriteList.add(FavoriteItem("","Favorite All","Description",true,true))
-        favoriteList.add(FavoriteItem("","Favorite All","Description",true,true))
+        favoriteList.add(FavoriteItem(0,"","Favorite All","Description",true,true))
+        favoriteList.add(FavoriteItem(1,"","Favorite All","Description",true,true))
+        favoriteList.add(FavoriteItem(2,"","Favorite All","Description",true,true))
         _favoriteListLiveData.value = favoriteList
     }
-
+    //тоже что и выше, но только избранные юзеры с разрешенным видео
     fun getFavoriteVideoAccepted(){
         //загружаем избранных юзеров, у кого разрешено видео
         favoriteList = ArrayList()
-        favoriteList.add(FavoriteItem("","Favorite Video","Description",true,true))
-        favoriteList.add(FavoriteItem("","Favorite Video","Description",true,true))
-        favoriteList.add(FavoriteItem("","Favorite Video","Description",true,true))
+        favoriteList.add(FavoriteItem(0,"","Favorite Video","Description",true,true))
+        favoriteList.add(FavoriteItem(1,"","Favorite Video","Description",true,true))
+        favoriteList.add(FavoriteItem(2,"","Favorite Video","Description",true,true))
         _favoriteListLiveData.value = favoriteList
     }
-
+    //тоже что и выше, но только избранные юзеры с разрешенным аудио
     fun getFavoriteAudioAccepted(){
         //загружаем избранных юзеров, у кого разрешено аудио
         favoriteList = ArrayList()
-        favoriteList.add(FavoriteItem("","Favorite Audio","Description",true,true))
-        favoriteList.add(FavoriteItem("","Favorite Audio","Description",true,true))
-        favoriteList.add(FavoriteItem("","Favorite Audio","Description",true,true))
+        favoriteList.add(FavoriteItem(0,"","Favorite Audio","Description",true,true))
+        favoriteList.add(FavoriteItem(1,"","Favorite Audio","Description",true,true))
+        favoriteList.add(FavoriteItem(2,"","Favorite Audio","Description",true,true))
         _favoriteListLiveData.value = favoriteList
     }
     fun searchFavorite(s: String){
@@ -105,6 +106,7 @@ class ChatsViewModel : ViewModel() {
         val searchList = chatsList.filter { x -> x.name.contains(s,true) } as ArrayList<ChatItem>
         _chatsListLiveData.value = searchList
     }
+    //МЕТОД С ВЫЗОВОМ API (chats.archive)
     fun archiveChats(){
         chatsList = chatsList.filter { x -> !x.checked } as ArrayList<ChatItem>
         _chatsListLiveData.value = chatsList

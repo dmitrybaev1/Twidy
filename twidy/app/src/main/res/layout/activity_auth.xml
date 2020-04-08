@@ -58,7 +58,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="25dp"
                     android:layout_marginBottom="257dp"
-                    android:text="Lorem ipsum 1"
+                    android:text="Slide title 1"
                     android:textColor="@color/white"
                     android:textSize="36sp" />
 
@@ -70,7 +70,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="32dp"
                     android:layout_marginBottom="205dp"
-                    android:text="Lorem ipsum 1"
+                    android:text="Slide description 1"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
@@ -129,7 +129,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="25dp"
                     android:layout_marginBottom="257dp"
-                    android:text="Lorem ipsum 2"
+                    android:text="Slide title 2"
                     android:textColor="@color/white"
                     android:textSize="36sp" />
 
@@ -141,7 +141,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="32dp"
                     android:layout_marginBottom="205dp"
-                    android:text="Lorem ipsum 2"
+                    android:text="Slide description 2"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
@@ -200,7 +200,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="25dp"
                     android:layout_marginBottom="257dp"
-                    android:text="Lorem ipsum 3"
+                    android:text="Slide title 3"
                     android:textColor="@color/white"
                     android:textSize="36sp" />
 
@@ -212,7 +212,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="32dp"
                     android:layout_marginBottom="205dp"
-                    android:text="Lorem ipsum 3"
+                    android:text="Slide description 3"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
@@ -271,7 +271,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="25dp"
                     android:layout_marginBottom="257dp"
-                    android:text="Lorem ipsum 4"
+                    android:text="Slide title 4"
                     android:textColor="@color/white"
                     android:textSize="36sp" />
 
@@ -283,7 +283,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="32dp"
                     android:layout_marginBottom="205dp"
-                    android:text="Lorem ipsum 4"
+                    android:text="Slide description 4"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 

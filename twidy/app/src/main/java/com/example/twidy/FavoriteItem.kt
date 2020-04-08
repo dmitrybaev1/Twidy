@@ -1,6 +1,7 @@
 package com.example.twidy
 
 data class FavoriteItem (
+    var id: Int,
     var avatar: String,
     var personName: String,
     var description: String,

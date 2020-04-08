@@ -1,5 +1,5 @@
 package com.example.twidy
 
-class ResultChatData {
-
-}
+data class ResultChatData (
+    val id: Int
+)
