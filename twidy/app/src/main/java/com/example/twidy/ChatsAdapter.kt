@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.github.siyamed.shapeimageview.RoundedImageView
+import com.squareup.picasso.Picasso
 
 class ChatsAdapter(var list: ArrayList<ChatItem>,var activity: MainActivity) : RecyclerView.Adapter<ChatsAdapter.ChatsHolder>(), View.OnLongClickListener {
     //private var checkedMode: Boolean = false
@@ -18,10 +19,11 @@ class ChatsAdapter(var list: ArrayList<ChatItem>,var activity: MainActivity) : R
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: ChatsHolder, position: Int) {
-        if(list[position].type=="Channel")
+        if(list[position].type!="user")
             holder.newMessagesView.background = activity.resources.getDrawable(R.drawable.channel_new_textview)
         if(list[position].newMessages==0)
             holder.newMessagesView.visibility = View.GONE
+        Picasso.get().load(list[position].avatar).into(holder.avatarView)
         holder.personNameView.text = list[position].name
         holder.lastMessageView.text = list[position].lastMessage
         holder.newMessagesView.text = list[position].newMessages.toString()

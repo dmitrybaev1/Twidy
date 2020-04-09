@@ -11,6 +11,9 @@
     <string name="location_error">Ошибка получения местоположения</string>
     <string name="auth_error">Ошибка авторизации</string>
     <string name="chats_error">Ошибка получения чатов</string>
+    <string name="favorite_error">Ошибка получения избранных пользователей</string>
+    <string name="archive_error">Ошибка архивирования</string>
+    <string name="no_internet">Нет подключения к интернету</string>
 
     <string name="skip_slide">Skip</string>
     <string name="title_authorization">Авторизация</string>
@@ -20,4 +23,7 @@
     <string name="we_sent_code">Мы отправили код проверки на указанный вами телефон</string>
     <string name="next">Далее</string>
     <string name="check_all">Выбрать все</string>
+    <string name="all">Чат</string>
+    <string name="video">Видео</string>
+    <string name="audio">Аудио</string>
 </resources>

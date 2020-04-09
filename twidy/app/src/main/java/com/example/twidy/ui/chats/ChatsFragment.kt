@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -14,6 +15,7 @@ import com.example.twidy.ChatsAdapter
 import com.example.twidy.MainActivity
 import com.example.twidy.FavoriteAdapter
 import com.example.twidy.R
+import com.example.twidy.databinding.PopupLayoutBinding
 
 class ChatsFragment : Fragment() {
 
@@ -34,7 +36,11 @@ class ChatsFragment : Fragment() {
         activity = getActivity() as MainActivity
         setHasOptionsMenu(true)
         chatsViewModel.resultConfirmData.value = activity.intent?.extras?.getParcelable("authConfirmData")
+
+        //если есть интернет, нужно подгружать чаты периодически и сравнивать изменения с локальной версией, если есть изменения, то обновлять
+        //если в оффлайне, то загрузить один раз локальную копию
         chatsViewModel.getChats()
+
         chatsViewModel.chatsListLiveData.observe(this, Observer {
             var chatsAdapter = ChatsAdapter(it,activity)
             chatsRecyclerView.adapter = chatsAdapter
@@ -131,28 +137,19 @@ class ChatsFragment : Fragment() {
         }
         private fun init(){
             var inflater = LayoutInflater.from(activity)
-            var view = inflater.inflate(R.layout.popup_layout,null)
+            val binding: PopupLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.popup_layout,null,false)
+            binding.lifecycleOwner = this@ChatsFragment
+            binding.chats = chatsViewModel
+            var view = binding.root
             var recyclerView: RecyclerView = view.findViewById(R.id.rv)
-            var chatButton: Button = view.findViewById(R.id.chat_button_popup)
-            var videoButton: Button = view.findViewById(R.id.video_button_popup)
-            var audioButton: Button = view.findViewById(R.id.audio_button_popup)
             var searchView: SearchView = view.findViewById(R.id.search_view_popup)
             var popupWindow = PopupWindow(view,ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT,true)
             popupWindow.showAtLocation(layout,Gravity.CENTER,0,0)
-            chatsViewModel.getFavoriteAll()
+            chatsViewModel.getFavorite("all")
             chatsViewModel.favoriteListLiveData.observe(this@ChatsFragment, Observer {
                 recyclerView.adapter = FavoriteAdapter(it)
                 recyclerView.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
             })
-            chatButton.setOnClickListener {
-                chatsViewModel.getFavoriteAll()
-            }
-            videoButton.setOnClickListener {
-                chatsViewModel.getFavoriteVideoAccepted()
-            }
-            audioButton.setOnClickListener {
-                chatsViewModel.getFavoriteAudioAccepted()
-            }
             searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return true
@@ -168,12 +165,6 @@ class ChatsFragment : Fragment() {
                 Toast.makeText(activity,"close",Toast.LENGTH_SHORT).show()
                 true
             }
-            /*searchView.setOnQueryTextFocusChangeListener { _, b ->
-                if(!b) {
-                    Toast.makeText(activity,"catch",Toast.LENGTH_SHORT).show()
-                    chatsViewModel.toSourceListFavorite()
-                }
-            }*/
         }
     }
 }

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.siyamed.shapeimageview.RoundedImageView
+import com.squareup.picasso.Picasso
 
 class FavoriteAdapter(var list: ArrayList<FavoriteItem>) : RecyclerView.Adapter<FavoriteAdapter.PopupHolder>() {
 
@@ -17,6 +18,7 @@ class FavoriteAdapter(var list: ArrayList<FavoriteItem>) : RecyclerView.Adapter<
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: PopupHolder, position: Int) {
+        Picasso.get().load(list[position].avatar).into(holder.avatarView)
         holder.personNameView.text = list[position].personName
         holder.descriptionView.text = list[position].description
     }

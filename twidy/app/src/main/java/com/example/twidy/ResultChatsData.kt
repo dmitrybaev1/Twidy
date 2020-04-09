@@ -1,5 +1,5 @@
 package com.example.twidy
 
-class ResultChatsData {
-
-}
+data class ResultChatsData (
+    var items: ArrayList<Chat>
+)

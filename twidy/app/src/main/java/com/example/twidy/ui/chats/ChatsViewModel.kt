@@ -1,5 +1,8 @@
 package com.example.twidy.ui.chats
 
+import android.app.Application
+import android.widget.Toast
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +15,9 @@ import retrofit2.HttpException
 import java.net.ConnectException
 import kotlin.coroutines.CoroutineContext
 
-class ChatsViewModel : ViewModel() {
+class ChatsViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val token = "7684b4103bfdd32b6fc3df63236a8f194e344601"
 
     val resultConfirmData = MutableLiveData<ResultConfirmData>()
 
@@ -30,70 +35,83 @@ class ChatsViewModel : ViewModel() {
     private val _apiError = MutableLiveData<String>()
     val apiError: LiveData<String> = _apiError
 
-    private lateinit var chatsData: ChatsData
-
     private val retrofit = RetrofitBuilder.build()
     private val job = Job()
     private val context: CoroutineContext
         get() = Dispatchers.Main + job
     private val vmScope = CoroutineScope(context)
+
+    private suspend fun formChats(result: ResultChatsData){
+        chatsList = ArrayList()
+        for(item in result.items)
+            chatsList.add(ChatItem(item.id,item.peer.image.toString(),item.peer.name,item.last_message.message,0,false,false,item.peer.type.toString()))
+    }
+
+    private suspend fun formFavorite(result: ResultFavoriteData,type: String){
+        favoriteList = ArrayList()
+        for(item in result.listOf)
+            if(type=="all")
+                favoriteList.add(FavoriteItem(item.id,item.photo,item.firstName+" "+item.lastName,item.biography,item.video_call_price?.let {it>0 }?:false,item.audio_call_price?.let {it>0 }?:false))
+            else if(type=="video"){
+                item.video_call_price?.let{
+                    if(it>0)
+                        favoriteList.add(FavoriteItem(item.id,item.photo,item.firstName+
+                                " "+item.lastName,item.biography,true,item.audio_call_price?.let {it>0 }?:false))
+                }
+            }
+            else if(type=="audio"){
+                item.audio_call_price?.let{
+                    if(it>0)
+                        favoriteList.add(FavoriteItem(item.id,item.photo,item.firstName+
+                                " "+item.lastName,item.biography,item.video_call_price?.let {it>0 }?:false,true))
+                }
+            }
+    }
+    fun sync(){
+        getChats()
+    }
     //МЕТОД С ВЫЗОВОМ API(chat.getLists и chat.getMessages, после чего формировать объект чата(ChatItem))
     fun getChats(){
         //загружаем чаты
-        /*vmScope.launch {
-            val api = retrofit.create(MainAPI::class.java)
-            try {
-                chatsData = api.getChats("")
-                if(chatsData.status=="ok") {
-                    //формировать лист чатов
-                    _chatsListLiveData.postValue(chatsList)
+        vmScope.launch {
+            if(InternetChecker.isOnline(getApplication())) {
+                val api = retrofit.create(MainAPI::class.java)
+                try {
+                    val chatsData = api.getChats(token)
+                    if (chatsData.status == "ok") {
+                         formChats(chatsData.result)
+                        _chatsListLiveData.postValue(chatsList)
+                    } else {
+                        _apiError.postValue(chatsData.message)
+                    }
+                } catch (t: Throwable) {
+                    _error.postValue(R.string.chats_error);
                 }
-                else {
-                    _apiError.postValue(chatsData.message)
-                }
             }
-            catch (ex: ConnectException){
-                _error.postValue(R.string.host_error)
-            }
-            catch (ex: HttpException){
-                _error.postValue(R.string.chats_error)
-            }
-        }*/
-        chatsList = ArrayList()
-        chatsList.add(ChatItem(0,"","Name Surname","Last message",1,false,false,"Chat"))
-        chatsList.add(ChatItem(1,"","Name Surname","Last message",3,false,false,"Chat"))
-        chatsList.add(ChatItem(2,"","Name Surname","Last message",0,false,false,"Chat"))
-        chatsList.add(ChatItem(3,"","Name Surname","Last message",1,false,false,"Chat"))
-        chatsList.add(ChatItem(4,"","Channel Name","Last message",15,false,false,"Channel"))
-        chatsList.add(ChatItem(5,"","Name Surname","Last message",0,false,false,"Chat"))
-        _chatsListLiveData.value = chatsList
+            else//здесь сделать локальную подгрузку сохраненных чатов
+                _error.postValue(R.string.no_internet)
+        }
     }
     //МЕТОД С ВЫЗОВОМ API(вызвать user.getFavorite и сформировать объект юзера(FavoriteItem))
-    fun getFavoriteAll(){
+    fun getFavorite(type: String){
         //загружаем избранных юзеров
-        favoriteList = ArrayList()
-        favoriteList.add(FavoriteItem(0,"","Favorite All","Description",true,true))
-        favoriteList.add(FavoriteItem(1,"","Favorite All","Description",true,true))
-        favoriteList.add(FavoriteItem(2,"","Favorite All","Description",true,true))
-        _favoriteListLiveData.value = favoriteList
-    }
-    //тоже что и выше, но только избранные юзеры с разрешенным видео
-    fun getFavoriteVideoAccepted(){
-        //загружаем избранных юзеров, у кого разрешено видео
-        favoriteList = ArrayList()
-        favoriteList.add(FavoriteItem(0,"","Favorite Video","Description",true,true))
-        favoriteList.add(FavoriteItem(1,"","Favorite Video","Description",true,true))
-        favoriteList.add(FavoriteItem(2,"","Favorite Video","Description",true,true))
-        _favoriteListLiveData.value = favoriteList
-    }
-    //тоже что и выше, но только избранные юзеры с разрешенным аудио
-    fun getFavoriteAudioAccepted(){
-        //загружаем избранных юзеров, у кого разрешено аудио
-        favoriteList = ArrayList()
-        favoriteList.add(FavoriteItem(0,"","Favorite Audio","Description",true,true))
-        favoriteList.add(FavoriteItem(1,"","Favorite Audio","Description",true,true))
-        favoriteList.add(FavoriteItem(2,"","Favorite Audio","Description",true,true))
-        _favoriteListLiveData.value = favoriteList
+        vmScope.launch {
+            if (InternetChecker.isOnline(getApplication())) {
+                val api = retrofit.create(MainAPI::class.java)
+                try {
+                    val favoriteData = api.getFavorite(token)
+                    if (favoriteData.status == "ok") {
+                        formFavorite(favoriteData.result, type)
+                        _favoriteListLiveData.postValue(favoriteList)
+                    } else
+                        _apiError.postValue(favoriteData.message)
+                } catch (t: Throwable) {
+                    _error.postValue(R.string.favorite_error)
+                }
+            }
+            else//здесь сделать локальную подгрузку сохраненных избранных юзеров
+                _error.postValue(R.string.no_internet)
+        }
     }
     fun searchFavorite(s: String){
         val searchList = favoriteList.filter { x -> x.personName.contains(s,true) } as ArrayList<FavoriteItem>
@@ -106,10 +124,44 @@ class ChatsViewModel : ViewModel() {
         val searchList = chatsList.filter { x -> x.name.contains(s,true) } as ArrayList<ChatItem>
         _chatsListLiveData.value = searchList
     }
-    //МЕТОД С ВЫЗОВОМ API (chats.archive)
+    //По хорошему надо проверять статус api.archive, соответственно надо переделать возвращаемое значение с Unit на ArchiveData
     fun archiveChats(){
-        chatsList = chatsList.filter { x -> !x.checked } as ArrayList<ChatItem>
-        _chatsListLiveData.value = chatsList
+        vmScope.launch {
+            if(InternetChecker.isOnline(getApplication())) {
+                val arcList = chatsList.filter { x -> x.checked } as ArrayList<ChatItem>
+                var s = ""
+                if (arcList.size > 1) {
+                    for (i in arcList.indices) {
+                        s += if (arcList[i] == arcList[arcList.size - 1])
+                            arcList[i].id.toString()
+                        else
+                            arcList[i].id.toString() + ","
+                    }
+                    val api = retrofit.create(MainAPI::class.java)
+                    try {
+                        api.archive(token, s)
+                        chatsList = chatsList.filter { x -> !x.checked } as ArrayList<ChatItem>
+                        _chatsListLiveData.postValue(chatsList)
+                        sync()
+                    } catch (t: Throwable) {
+                        _error.postValue(R.string.archive_error)
+                    }
+                } else {
+                    val api = retrofit.create(MainAPI::class.java)
+                    try {
+                        api.archive(token, arcList[0].id)
+                        chatsList = chatsList.filter { x -> !x.checked } as ArrayList<ChatItem>
+                        _chatsListLiveData.postValue(chatsList)
+                        sync()
+                    } catch (t: Throwable) {
+                        _error.postValue(R.string.archive_error)
+                    }
+                }
+            }
+            else//можно кэшировать архивированные чаты, и при возобновлении интернета вызывать archive к серверу
+                _error.postValue(R.string.no_internet)
+
+        }
     }
     fun checkAllChats(){
         chatsList.forEach { x -> x.checked=true }

@@ -1,6 +1,6 @@
 package com.example.twidy
 
-data class User (
+data class PopularUser (
     var id: Int,
     var firstName: String,
     var lastName: String,
