@@ -11,10 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.twidy.ChatsAdapter
-import com.example.twidy.MainActivity
-import com.example.twidy.FavoriteAdapter
-import com.example.twidy.R
+import com.example.twidy.*
 import com.example.twidy.databinding.PopupLayoutBinding
 
 class ChatsFragment : Fragment() {
