@@ -44,25 +44,10 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
         chatsList!!.sortByDescending { it.timestamp }
     }
 
-    private fun formFavorite(result: ResultFavoriteData,type: String){
+    private fun formFavorite(result: ResultFavoriteData){
         favoriteList = ArrayList()
         for(item in result.listOf)
-            if(type=="all")
-                favoriteList!!.add(FavoriteItem(item.id,item.photo,item.firstName+" "+item.lastName,item.biography,item.video_call_price?.let {it>0 }?:false,item.audio_call_price?.let {it>0 }?:false))
-            else if(type=="video"){
-                item.video_call_price?.let{
-                    if(it>0)
-                        favoriteList!!.add(FavoriteItem(item.id,item.photo,item.firstName+
-                                " "+item.lastName,item.biography,true,item.audio_call_price?.let {it>0 }?:false))
-                }
-            }
-            else if(type=="audio"){
-                item.audio_call_price?.let{
-                    if(it>0)
-                        favoriteList!!.add(FavoriteItem(item.id,item.photo,item.firstName+
-                                " "+item.lastName,item.biography,item.video_call_price?.let {it>0 }?:false,true))
-                }
-            }
+            favoriteList!!.add(FavoriteItem(item.id,item.photo,item.firstName+" "+item.lastName,item.biography,item.video_call_price?.let {it>0 }?:false,item.audio_call_price?.let {it>0 }?:false))
         favoriteList!!.sortBy { it.personName }
     }
     fun sync(){
@@ -115,8 +100,16 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
         //загружаем избранных юзеров
         vmScope.launch {
             val database = AppDatabase.getDatabase(getApplication())
-            val localFavoriteList = database.favoriteItemDao().getAll() as ArrayList<FavoriteItem>
+            var localFavoriteList = database.favoriteItemDao().getAll() as ArrayList<FavoriteItem>
             favoriteList?.let {
+                if(type=="video"){
+                    favoriteList = it.filter { x-> x.isVideoAccepted } as ArrayList<FavoriteItem>
+                    localFavoriteList = localFavoriteList.filter { x -> x.isVideoAccepted } as ArrayList<FavoriteItem>
+                }
+                else if(type=="audio"){
+                    favoriteList = it.filter { x-> x.isAudioAccepted } as ArrayList<FavoriteItem>
+                    localFavoriteList = localFavoriteList.filter { x -> x.isAudioAccepted } as ArrayList<FavoriteItem>
+                }
                 if(!(it.size==localFavoriteList.size&&it.containsAll(localFavoriteList))) {
                     favoriteList = localFavoriteList
                     favoriteList?.let{inner->
@@ -124,6 +117,10 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
                     }
                 }
             }?: run {
+                if(type=="video")
+                    localFavoriteList = localFavoriteList.filter { x -> x.isVideoAccepted } as ArrayList<FavoriteItem>
+                else if(type=="audio")
+                    localFavoriteList = localFavoriteList.filter { x -> x.isAudioAccepted } as ArrayList<FavoriteItem>
                 favoriteList = localFavoriteList
                 favoriteList?.let{
                     _favoriteListLiveData.postValue(it)
@@ -134,12 +131,19 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
                 try {
                     val favoriteData = api.getFavorite(token)
                     if (favoriteData.status == "ok") {
-                        formFavorite(favoriteData.result, type)
+                        formFavorite(favoriteData.result)
                         favoriteList?.let{
-                            if(!(it.size==localFavoriteList.size&&it.containsAll(localFavoriteList))) {
-                                _favoriteListLiveData.postValue(it)
-                                database.favoriteItemDao().insertAll(it)
+                            if(type=="video"){
+                                favoriteList = it.filter { x-> x.isVideoAccepted } as ArrayList<FavoriteItem>
+                                localFavoriteList = localFavoriteList.filter { x -> x.isVideoAccepted } as ArrayList<FavoriteItem>
                             }
+                            else if(type=="audio"){
+                                favoriteList = it.filter { x-> x.isAudioAccepted } as ArrayList<FavoriteItem>
+                                localFavoriteList = localFavoriteList.filter { x -> x.isAudioAccepted } as ArrayList<FavoriteItem>
+                            }
+                            _favoriteListLiveData.postValue(favoriteList)
+                            if(type=="all")
+                                database.favoriteItemDao().insertAll(it)
                         }
                     } else
                         _apiError.postValue(favoriteData.message)
