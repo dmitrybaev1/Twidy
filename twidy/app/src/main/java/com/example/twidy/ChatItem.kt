@@ -3,6 +3,7 @@ package com.example.twidy
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.sql.Timestamp
 
 @Entity
 data class ChatItem (
@@ -14,6 +15,8 @@ data class ChatItem (
     var name: String,
     @ColumnInfo(name = "lastMessage")
     var lastMessage: String,
+    @ColumnInfo(name = "timestamp")
+    var timestamp: Long,
     @ColumnInfo(name="newMessages")
     var newMessages: Int,
     @ColumnInfo(name = "checked")
@@ -22,4 +25,11 @@ data class ChatItem (
     var inCheckedMode: Boolean,
     @ColumnInfo(name = "type")
     var type: String
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        val o = other as ChatItem
+        return id==o.id&&avatar==o.avatar&&name==o.name&&lastMessage==o.lastMessage&&
+                newMessages==o.newMessages&&checked==o.checked&&inCheckedMode==o.inCheckedMode
+                &&type==o.type
+    }
+}

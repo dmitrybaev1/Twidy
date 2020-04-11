@@ -4,12 +4,12 @@ import androidx.room.*
 
 @Dao
 interface ChatItemDao {
-    @Query("SELECT * FROM chatitem")
-    fun getAll(): List<ChatItem>
+    @Query("SELECT * FROM chatitem ORDER BY timestamp DESC")
+    suspend fun getAll(): List<ChatItem>
     @Query("SELECT * FROM chatitem WHERE id = :id")
-    fun getById(id: Int): ChatItem
+    suspend fun getById(id: Int): ChatItem
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(list: List<ChatItem>)
+    suspend fun insertAll(list: List<ChatItem>)
     @Delete
-    fun delete(item: ChatItem)
+    suspend fun delete(item: ChatItem)
 }

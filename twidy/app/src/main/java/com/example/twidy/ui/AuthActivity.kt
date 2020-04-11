@@ -1,4 +1,4 @@
-package com.example.twidy
+package com.example.twidy.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.twidy.PhoneCodeSpinnerAdapter
+import com.example.twidy.R
 import com.example.twidy.databinding.ActivityAuthBinding
+
 //TODO переделать многое на binding
 class AuthActivity : AppCompatActivity() {
     private lateinit var authVm: AuthViewModel
@@ -29,7 +32,8 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         authVm = ViewModelProviders.of(this).get(AuthViewModel::class.java)
         val binding: ActivityAuthBinding = DataBindingUtil.setContentView(
-            this, R.layout.activity_auth)
+            this, R.layout.activity_auth
+        )
         binding.lifecycleOwner = this
         binding.auth = authVm
         viewFlipper = findViewById(R.id.view_flipper)
@@ -93,7 +97,11 @@ class AuthActivity : AppCompatActivity() {
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         })
         authVm.countries.observe(this, Observer {staticData ->
-            phoneCodeAdapter = PhoneCodeSpinnerAdapter(this,R.layout.code_spinner_item,staticData.result.country)
+            phoneCodeAdapter = PhoneCodeSpinnerAdapter(
+                this,
+                R.layout.code_spinner_item,
+                staticData.result.country
+            )
             phoneCodeSpinner.adapter = phoneCodeAdapter
             authVm.getLocation()
         })
@@ -109,7 +117,7 @@ class AuthActivity : AppCompatActivity() {
             countryTextView.text = phoneCodeAdapter.getItem(it)?.name
         })
         authVm.confirm.observe(this, Observer {confirmData ->
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             intent.putExtra("authConfirmResult",confirmData.result)
             startActivity(intent)

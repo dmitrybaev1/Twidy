@@ -1,18 +1,14 @@
 package com.example.twidy.ui.chats
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.twidy.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import java.net.ConnectException
 import kotlin.coroutines.CoroutineContext
 
 class ChatsViewModel(application: Application) : AndroidViewModel(application) {
@@ -23,11 +19,11 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _chatsListLiveData = MutableLiveData<ArrayList<ChatItem>>()
     val chatsListLiveData: LiveData<ArrayList<ChatItem>> = _chatsListLiveData
-    private lateinit var chatsList: ArrayList<ChatItem>
+    private var chatsList: ArrayList<ChatItem>? = null
 
     private val _favoriteListLiveData = MutableLiveData<ArrayList<FavoriteItem>>()
     val favoriteListLiveData: LiveData<ArrayList<FavoriteItem>> = _favoriteListLiveData
-    private lateinit var favoriteList: ArrayList<FavoriteItem>
+    private var favoriteList: ArrayList<FavoriteItem>? = null
 
     private val _error = MutableLiveData<Int>()
     val error: LiveData<Int> = _error
@@ -41,46 +37,68 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
         get() = Dispatchers.Main + job
     private val vmScope = CoroutineScope(context)
 
-    private suspend fun formChats(result: ResultChatsData){
+    private fun formChats(result: ResultChatsData){
         chatsList = ArrayList()
         for(item in result.items)
-            chatsList.add(ChatItem(item.id,item.peer.image.toString(),item.peer.name,item.last_message.message,0,false,false,item.peer.type.toString()))
+            chatsList!!.add(ChatItem(item.id,item.peer.image.toString(),item.peer.name,item.last_message.message,item.last_message.timestamp,0,false,false,item.peer.type.toString()))
+        chatsList!!.sortByDescending { it.timestamp }
     }
 
-    private suspend fun formFavorite(result: ResultFavoriteData,type: String){
+    private fun formFavorite(result: ResultFavoriteData,type: String){
         favoriteList = ArrayList()
         for(item in result.listOf)
             if(type=="all")
-                favoriteList.add(FavoriteItem(item.id,item.photo,item.firstName+" "+item.lastName,item.biography,item.video_call_price?.let {it>0 }?:false,item.audio_call_price?.let {it>0 }?:false))
+                favoriteList!!.add(FavoriteItem(item.id,item.photo,item.firstName+" "+item.lastName,item.biography,item.video_call_price?.let {it>0 }?:false,item.audio_call_price?.let {it>0 }?:false))
             else if(type=="video"){
                 item.video_call_price?.let{
                     if(it>0)
-                        favoriteList.add(FavoriteItem(item.id,item.photo,item.firstName+
+                        favoriteList!!.add(FavoriteItem(item.id,item.photo,item.firstName+
                                 " "+item.lastName,item.biography,true,item.audio_call_price?.let {it>0 }?:false))
                 }
             }
             else if(type=="audio"){
                 item.audio_call_price?.let{
                     if(it>0)
-                        favoriteList.add(FavoriteItem(item.id,item.photo,item.firstName+
+                        favoriteList!!.add(FavoriteItem(item.id,item.photo,item.firstName+
                                 " "+item.lastName,item.biography,item.video_call_price?.let {it>0 }?:false,true))
                 }
             }
+        favoriteList!!.sortBy { it.personName }
     }
     fun sync(){
         getChats()
     }
-    //МЕТОД С ВЫЗОВОМ API(chat.getLists и chat.getMessages, после чего формировать объект чата(ChatItem))
+
     fun getChats(){
-        //загружаем чаты
         vmScope.launch {
+            val database = AppDatabase.getDatabase(getApplication())
+            val localChatsList = database.chatItemDao().getAll() as ArrayList<ChatItem>
+            chatsList?.let {
+                if(!(it.size==localChatsList.size&&it.containsAll(localChatsList))) {
+                    chatsList = localChatsList
+                    chatsList?.let{inner->
+                        _chatsListLiveData.postValue(inner)
+                    }
+                }
+            }?: run {
+                chatsList = localChatsList
+                chatsList?.let{
+                    _chatsListLiveData.postValue(it)
+                }
+            }
             if(InternetChecker.isOnline(getApplication())) {
                 val api = retrofit.create(MainAPI::class.java)
                 try {
                     val chatsData = api.getChats(token)
                     if (chatsData.status == "ok") {
-                         formChats(chatsData.result)
-                        _chatsListLiveData.postValue(chatsList)
+                        formChats(chatsData.result)
+                        chatsList?.let{
+                            if(!(it.size==localChatsList.size&&it.containsAll(localChatsList))) {
+                                _chatsListLiveData.postValue(it)
+                                database.chatItemDao().insertAll(it)
+                            }
+                        }
+
                     } else {
                         _apiError.postValue(chatsData.message)
                     }
@@ -88,7 +106,7 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
                     _error.postValue(R.string.chats_error);
                 }
             }
-            else//здесь сделать локальную подгрузку сохраненных чатов
+            else
                 _error.postValue(R.string.no_internet)
         }
     }
@@ -96,39 +114,59 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
     fun getFavorite(type: String){
         //загружаем избранных юзеров
         vmScope.launch {
+            val database = AppDatabase.getDatabase(getApplication())
+            val localFavoriteList = database.favoriteItemDao().getAll() as ArrayList<FavoriteItem>
+            favoriteList?.let {
+                if(!(it.size==localFavoriteList.size&&it.containsAll(localFavoriteList))) {
+                    favoriteList = localFavoriteList
+                    favoriteList?.let{inner->
+                        _favoriteListLiveData.postValue(inner)
+                    }
+                }
+            }?: run {
+                favoriteList = localFavoriteList
+                favoriteList?.let{
+                    _favoriteListLiveData.postValue(it)
+                }
+            }
             if (InternetChecker.isOnline(getApplication())) {
                 val api = retrofit.create(MainAPI::class.java)
                 try {
                     val favoriteData = api.getFavorite(token)
                     if (favoriteData.status == "ok") {
                         formFavorite(favoriteData.result, type)
-                        _favoriteListLiveData.postValue(favoriteList)
+                        favoriteList?.let{
+                            if(!(it.size==localFavoriteList.size&&it.containsAll(localFavoriteList))) {
+                                _favoriteListLiveData.postValue(it)
+                                database.favoriteItemDao().insertAll(it)
+                            }
+                        }
                     } else
                         _apiError.postValue(favoriteData.message)
                 } catch (t: Throwable) {
                     _error.postValue(R.string.favorite_error)
                 }
             }
-            else//здесь сделать локальную подгрузку сохраненных избранных юзеров
+            else
                 _error.postValue(R.string.no_internet)
         }
     }
     fun searchFavorite(s: String){
-        val searchList = favoriteList.filter { x -> x.personName.contains(s,true) } as ArrayList<FavoriteItem>
-        if(searchList.containsAll(favoriteList))
+        val searchList = favoriteList!!.filter { x -> x.personName.contains(s,true) } as ArrayList<FavoriteItem>
+        if(searchList.containsAll(favoriteList!!))
             _favoriteListLiveData.value = favoriteList
         else
             _favoriteListLiveData.value = searchList
     }
     fun searchChats(s: String){
-        val searchList = chatsList.filter { x -> x.name.contains(s,true) } as ArrayList<ChatItem>
+        val searchList = chatsList!!.filter { x -> x.name.contains(s,true) } as ArrayList<ChatItem>
         _chatsListLiveData.value = searchList
     }
     //По хорошему надо проверять статус api.archive, соответственно надо переделать возвращаемое значение с Unit на ArchiveData
     fun archiveChats(){
         vmScope.launch {
             if(InternetChecker.isOnline(getApplication())) {
-                val arcList = chatsList.filter { x -> x.checked } as ArrayList<ChatItem>
+                val arcList = chatsList!!.filter { x -> x.checked } as ArrayList<ChatItem>
                 var s = ""
                 if (arcList.size > 1) {
                     for (i in arcList.indices) {
@@ -140,7 +178,7 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
                     val api = retrofit.create(MainAPI::class.java)
                     try {
                         api.archive(token, s)
-                        chatsList = chatsList.filter { x -> !x.checked } as ArrayList<ChatItem>
+                        chatsList = chatsList!!.filter { x -> !x.checked } as ArrayList<ChatItem>
                         _chatsListLiveData.postValue(chatsList)
                         sync()
                     } catch (t: Throwable) {
@@ -150,7 +188,7 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
                     val api = retrofit.create(MainAPI::class.java)
                     try {
                         api.archive(token, arcList[0].id)
-                        chatsList = chatsList.filter { x -> !x.checked } as ArrayList<ChatItem>
+                        chatsList = chatsList!!.filter { x -> !x.checked } as ArrayList<ChatItem>
                         _chatsListLiveData.postValue(chatsList)
                         sync()
                     } catch (t: Throwable) {
@@ -164,7 +202,7 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
     fun checkAllChats(){
-        chatsList.forEach { x -> x.checked=true }
+        chatsList!!.forEach { x -> x.checked=true }
         _chatsListLiveData.value = chatsList
     }
     fun toSourceListChats(){

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twidy.*
 import com.example.twidy.databinding.PopupLayoutBinding
+import com.example.twidy.ui.MainActivity
 
 class ChatsFragment : Fragment() {
 
@@ -33,11 +34,9 @@ class ChatsFragment : Fragment() {
         activity = getActivity() as MainActivity
         setHasOptionsMenu(true)
         chatsViewModel.resultConfirmData.value = activity.intent?.extras?.getParcelable("authConfirmData")
-
         //если есть интернет, нужно подгружать чаты периодически и сравнивать изменения с локальной версией, если есть изменения, то обновлять
         //если в оффлайне, то загрузить один раз локальную копию
         chatsViewModel.getChats()
-
         chatsViewModel.chatsListLiveData.observe(this, Observer {
             var chatsAdapter = ChatsAdapter(it,activity)
             chatsRecyclerView.adapter = chatsAdapter

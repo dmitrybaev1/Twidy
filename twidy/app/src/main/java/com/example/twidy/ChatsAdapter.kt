@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.example.twidy.ui.MainActivity
 import com.github.siyamed.shapeimageview.RoundedImageView
 import com.squareup.picasso.Picasso
 
