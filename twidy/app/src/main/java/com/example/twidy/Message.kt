@@ -2,16 +2,15 @@ package com.example.twidy
 
 data class Message (
     var id: Int,
-    var dialog_id: Int,
     var user_id: Int,
-    var message: String,
-    var type: String,
+    var dialog_id: Int,
     var timestamp: Long,
-    var fomatted_time: String
-){
-    override fun equals(other: Any?): Boolean {
-        var o = other as Message
-        return id==o.id&&dialog_id==o.dialog_id&&user_id==o.user_id&&message==o.message&&type==o.type
-                &&timestamp==o.timestamp&&fomatted_time==o.fomatted_time
-    }
-}
+    var type: String,
+    var guuid: String,
+    var charge_id: String?,
+    var cost: Int,
+    var is_paid: Boolean,
+    var text: String,
+    var react: String,
+    var user: MessageUser
+)

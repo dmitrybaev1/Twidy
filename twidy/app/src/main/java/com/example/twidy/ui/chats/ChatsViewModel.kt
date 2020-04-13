@@ -1,10 +1,12 @@
 package com.example.twidy.ui.chats
 
 import android.app.Application
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.twidy.*
+import com.example.twidy.ui.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -28,6 +30,9 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
     private val _error = MutableLiveData<Int>()
     val error: LiveData<Int> = _error
 
+    private val _closePopupLiveData = MutableLiveData<Boolean>()
+    val closePopupLiveData: LiveData<Boolean> = _closePopupLiveData
+
     private val _apiError = MutableLiveData<String>()
     val apiError: LiveData<String> = _apiError
 
@@ -37,6 +42,11 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
         get() = Dispatchers.Main + job
     private val vmScope = CoroutineScope(context)
 
+    var isToolbarInEditMode = false
+
+    fun closePopup(){
+        _closePopupLiveData.value=true
+    }
     private fun formChats(result: ResultChatsData){
         chatsList = ArrayList()
         for(item in result.items)
@@ -110,11 +120,9 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
                     favoriteList = it.filter { x-> x.isAudioAccepted } as ArrayList<FavoriteItem>
                     localFavoriteList = localFavoriteList.filter { x -> x.isAudioAccepted } as ArrayList<FavoriteItem>
                 }
-                if(!(it.size==localFavoriteList.size&&it.containsAll(localFavoriteList))) {
-                    favoriteList = localFavoriteList
-                    favoriteList?.let{inner->
-                        _favoriteListLiveData.postValue(inner)
-                    }
+                favoriteList = localFavoriteList
+                favoriteList?.let{inner->
+                    _favoriteListLiveData.postValue(inner)
                 }
             }?: run {
                 if(type=="video")
@@ -172,6 +180,10 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
             if(InternetChecker.isOnline(getApplication())) {
                 val arcList = chatsList!!.filter { x -> x.checked } as ArrayList<ChatItem>
                 var s = ""
+                if(arcList.size==0) {
+                    _error.postValue(R.string.choose_chats)
+                    return@launch
+                }
                 if (arcList.size > 1) {
                     for (i in arcList.indices) {
                         s += if (arcList[i] == arcList[arcList.size - 1])
@@ -188,7 +200,7 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
                     } catch (t: Throwable) {
                         _error.postValue(R.string.archive_error)
                     }
-                } else {
+                } else if(arcList.size==1) {
                     val api = retrofit.create(MainAPI::class.java)
                     try {
                         api.archive(token, arcList[0].id)
@@ -205,6 +217,7 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
 
         }
     }
+
     fun checkAllChats(){
         chatsList!!.forEach { x -> x.checked=true }
         _chatsListLiveData.value = chatsList

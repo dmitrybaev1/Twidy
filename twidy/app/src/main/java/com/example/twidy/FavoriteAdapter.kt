@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso
 class FavoriteAdapter(var list: ArrayList<FavoriteItem>) : RecyclerView.Adapter<FavoriteAdapter.PopupHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopupHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.popup_item,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.favorite_item,parent,false)
         return PopupHolder(view)
     }
 

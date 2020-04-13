@@ -11,7 +11,7 @@ import com.example.twidy.R
 
 class MainActivity : AppCompatActivity() {
     lateinit var toolbar: Toolbar
-    var isInEditModeChats: Boolean = false
+    //var isInEditModeChats: Boolean = false
     lateinit var navView: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

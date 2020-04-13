@@ -3,18 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/edit_bar"
-        android:title="Edit"
+        android:title=""
+        app:actionLayout="@layout/edit_menu_item"
         app:showAsAction="always"/>
     <item
         android:id="@+id/write_bar"
         android:title="Write"
         app:showAsAction="always"
-        android:icon="@drawable/baseline_open_in_browser_white_18dp"/>
+        android:icon="@drawable/write_icon"/>
 
     <item
         android:id="@+id/search_bar"
         android:title="Search"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        android:icon="@drawable/baseline_search_white_18dp"/>
+        android:icon="@drawable/search_icon"/>
 </menu>

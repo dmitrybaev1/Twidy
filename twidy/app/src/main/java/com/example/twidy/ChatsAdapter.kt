@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twidy.ui.MainActivity
+import com.example.twidy.ui.chats.ChatsViewModel
 import com.github.siyamed.shapeimageview.RoundedImageView
 import com.squareup.picasso.Picasso
 
-class ChatsAdapter(var list: ArrayList<ChatItem>,var activity: MainActivity) : RecyclerView.Adapter<ChatsAdapter.ChatsHolder>(), View.OnLongClickListener {
-    //private var checkedMode: Boolean = false
+class ChatsAdapter(var list: ArrayList<ChatItem>,var activity: MainActivity,var vm: ChatsViewModel) : RecyclerView.Adapter<ChatsAdapter.ChatsHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatsHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.chat_item,parent,false)
-        view.setOnLongClickListener(this)
         return ChatsHolder(view)
     }
 
@@ -34,13 +34,28 @@ class ChatsAdapter(var list: ArrayList<ChatItem>,var activity: MainActivity) : R
             holder.checkBox.visibility = View.GONE
         holder.checkBox.isChecked = list[position].checked
         var listener = View.OnClickListener{
-            if(activity.isInEditModeChats) {
+            if(vm.isToolbarInEditMode) {
                 list[position].checked = !list[position].checked
                 notifyItemChanged(position)
             }
         }
         holder.view.setOnClickListener(listener)
         holder.checkBox.setOnClickListener(listener)
+    }
+
+    fun setItemsCheckedMode(){
+        for (i in list.indices) {
+            list[i].inCheckedMode = true
+            notifyItemChanged(i)
+        }
+    }
+
+    fun unsetItemsCheckedMode(){
+        for (i in list.indices) {
+            list[i].inCheckedMode = false
+            list[i].checked = false
+            notifyItemChanged(i)
+        }
     }
 
     inner class ChatsHolder : RecyclerView.ViewHolder{
@@ -60,7 +75,7 @@ class ChatsAdapter(var list: ArrayList<ChatItem>,var activity: MainActivity) : R
         }
     }
 
-    fun changeMode(){
+    /*fun changeMode(){
         if (!activity.isInEditModeChats) {
             activity.isInEditModeChats = true
             activity.navView.visibility = View.GONE
@@ -80,11 +95,5 @@ class ChatsAdapter(var list: ArrayList<ChatItem>,var activity: MainActivity) : R
                 list[i].checked = false
                 notifyItemChanged(i)
             }
-        }
-    }
-    override fun onLongClick(p0: View?): Boolean {
-        changeMode()
-        return true
-    }
-
+        }*/
 }

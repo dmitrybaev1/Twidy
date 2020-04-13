@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/archive_bar"
-        app:showAsAction="always|collapseActionView"
-        android:title="Archive"
-        android:icon="@drawable/baseline_archive_white_18dp"/>
+        app:showAsAction="always"
+        android:title=""
+        app:actionLayout="@layout/archive_menu_item"/>
     <item
         android:id="@+id/checkAll_bar"
         app:showAsAction="never"
