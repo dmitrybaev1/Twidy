@@ -13,7 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twidy.*
 import com.example.twidy.databinding.FavoriteLayoutBinding
-import com.example.twidy.ui.MainActivity
+import com.example.twidy.ui.main.MainActivity
+import com.example.twidy.ui.chats.adapters.ChatsAdapter
+import com.example.twidy.ui.chats.adapters.FavoriteSection
+import com.example.twidy.ui.chats.items.FavoriteItem
+import com.example.twidy.ui.chats.vm.ChatsViewModel
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 
 class ChatsFragment : Fragment() {
@@ -41,7 +45,11 @@ class ChatsFragment : Fragment() {
         //если в оффлайне, то загрузить один раз локальную копию
         chatsViewModel.getChats()
         chatsViewModel.chatsListLiveData.observe(viewLifecycleOwner, Observer {
-            var chatsAdapter = ChatsAdapter(it,activity,chatsViewModel)
+            var chatsAdapter = ChatsAdapter(
+                it,
+                activity,
+                chatsViewModel
+            )
             chatsRecyclerView.adapter = chatsAdapter
             chatsRecyclerView.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
             if(chatsViewModel.isToolbarInEditMode&&chatsAdapter.itemCount==0) {
@@ -60,7 +68,12 @@ class ChatsFragment : Fragment() {
             for(titleItem in distinctList) {
                 var title = titleItem.personName[0]
                 val subList = it.filter { item -> item.personName[0] == title} as ArrayList<FavoriteItem>
-                adapter.addSection(FavoriteSection(subList,title.toString()))
+                adapter.addSection(
+                    FavoriteSection(
+                        subList,
+                        title.toString()
+                    )
+                )
             }
             popupRecyclerView.adapter = adapter
             popupRecyclerView.layoutManager =
