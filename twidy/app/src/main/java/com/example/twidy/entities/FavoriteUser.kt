@@ -1,5 +1,9 @@
 package com.example.twidy.entities
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 data class FavoriteUser (
     var id: Int,
     var domain: String,

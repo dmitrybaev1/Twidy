@@ -1,11 +1,12 @@
 package com.example.twidy.ui.chats.dao
 
 import androidx.room.*
+import com.example.twidy.entities.FavoriteUser
 import com.example.twidy.ui.chats.items.FavoriteItem
 
 @Dao
 interface FavoriteItemDao {
-    @Query("SELECT * FROM favoriteitem ORDER BY personName")
+    @Query("SELECT * FROM favoriteitem")
     suspend fun getAll(): List<FavoriteItem>
     @Query("SELECT * FROM favoriteitem WHERE id = :id")
     suspend fun getById(id: Int): FavoriteItem

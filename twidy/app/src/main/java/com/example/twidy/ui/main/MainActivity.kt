@@ -1,5 +1,6 @@
 package com.example.twidy.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -8,11 +9,16 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.twidy.R
+import com.example.twidy.services.ChatsUpdateService
+import android.util.Log
+import com.example.twidy.ui.chats.vm.ChatsViewModel
 
 class MainActivity : AppCompatActivity() {
     lateinit var toolbar: Toolbar
     //var isInEditModeChats: Boolean = false
     lateinit var navView: BottomNavigationView
+    private lateinit var chatsUpdateService: Intent
+    var chatsViewModel: ChatsViewModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,6 +40,24 @@ class MainActivity : AppCompatActivity() {
             //менять что-нибудь если был переход на другой фрагмент
 
         }
+        chatsUpdateService = Intent(this,ChatsUpdateService::class.java)
+        val pi = createPendingResult(1,chatsUpdateService,0)
+        chatsUpdateService.putExtra("pi",pi)
+        chatsUpdateService.putExtra("token","65240d7d04b21c60e4e3f6c73174d05e2554a27b")
+        startService(chatsUpdateService)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        stopService(chatsUpdateService)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("log","on activity result")
+        //обновить UI в chats fragment
+        chatsViewModel?.let {
+            it.getChats()
+        }
+    }
 }

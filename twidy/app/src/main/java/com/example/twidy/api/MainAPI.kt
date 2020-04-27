@@ -4,13 +4,14 @@ import com.example.twidy.entities.ChatData
 import com.example.twidy.entities.ChatsData
 import com.example.twidy.entities.FavoriteData
 import com.example.twidy.entities.MessagesData
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
 
 interface MainAPI {
     @GET("chats.getList")
-    suspend fun getChats(@Header("Authorization")token: String): ChatsData
+    fun getChats(@Header("Authorization")token: String): Call<ChatsData>
     @GET("chats.getMessages")
     suspend fun getMessages(@Header("Authorization")token: String,@Query("id")id: Int,@Query("offset")offset: Int): MessagesData
     @GET("chats.archive")

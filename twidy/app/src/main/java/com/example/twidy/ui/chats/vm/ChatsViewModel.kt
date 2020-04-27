@@ -1,6 +1,7 @@
 package com.example.twidy.ui.chats.vm
 
 import android.app.Application
+import android.os.Parcelable
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -8,24 +9,24 @@ import androidx.lifecycle.MutableLiveData
 import com.example.twidy.*
 import com.example.twidy.api.MainAPI
 import com.example.twidy.database.AppDatabase
-import com.example.twidy.entities.ResultChatsData
-import com.example.twidy.entities.ResultConfirmData
-import com.example.twidy.entities.ResultFavoriteData
+import com.example.twidy.entities.*
 import com.example.twidy.ui.chats.items.ChatItem
 import com.example.twidy.ui.chats.items.FavoriteItem
 import com.example.twidy.utils.CryptLib
 import com.example.twidy.utils.InternetChecker
 import com.example.twidy.utils.RetrofitBuilder
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import javax.crypto.BadPaddingException
+import java.sql.Array
 import kotlin.coroutines.CoroutineContext
+@Parcelize
+class ChatsViewModel(var app: @RawValue Application) : AndroidViewModel(app), Parcelable {
 
-class ChatsViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val token = "7684b4103bfdd32b6fc3df63236a8f194e344601"
+    private val token = "65240d7d04b21c60e4e3f6c73174d05e2554a27b"
 
     val resultConfirmData = MutableLiveData<ResultConfirmData>()
 
@@ -59,9 +60,9 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
     fun closePopup(){
         _closePopupLiveData.value=true
     }
-    private fun formChats(result: ResultChatsData){
+    private fun formChats(items: ArrayList<Chat>){
         chatsList = ArrayList()
-        for(item in result.items)
+        for(item in items)
             chatsList!!.add(
                 ChatItem(
                     item.id,
@@ -78,9 +79,9 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
         chatsList!!.sortByDescending { it.timestamp }
     }
 
-    private fun formFavorite(result: ResultFavoriteData){
+    private fun formFavorites(items: ArrayList<FavoriteUser>){
         favoriteList = ArrayList()
-        for(item in result.listOf)
+        for(item in items)
             favoriteList!!.add(
                 FavoriteItem(
                     item.id,
@@ -96,12 +97,12 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
     fun sync(){
         getChats()
     }
-    private fun decrypt(list: ArrayList<ChatItem>){
-        for(i in list){
+    private fun decrypt(){
+        for(i in chatsList!!){
             try {
                 i.lastMessage = cryptLib.decryptCipherTextWithRandomIV(i.lastMessage,cryptLib.sha1(i.id.toString()))
             }
-            catch (t: BadPaddingException){
+            catch (t: Throwable){
                 Log.e("err","decrypt error in chat"+i.id.toString())
                 //_error.value = R.string.decrypt_error
             }
@@ -110,7 +111,11 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
     fun getChats(){
         vmScope.launch {
             val database = AppDatabase.getDatabase(getApplication())
-            val localChatsList = database.chatItemDao().getAll() as ArrayList<ChatItem>
+            chatsList = database.chatItemDao().getAll() as ArrayList<ChatItem>
+            _chatsListLiveData.postValue(chatsList)
+            if(!InternetChecker.isOnline(getApplication()))
+                _error.postValue(R.string.no_internet)
+            /*val localChatsList = database.chatItemDao().getAll() as ArrayList<ChatItem>
             decrypt(localChatsList)
             chatsList?.let {
                 if(!(it.size==localChatsList.size&&it.containsAll(localChatsList))) {
@@ -124,9 +129,10 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
                 chatsList?.let{
                     _chatsListLiveData.postValue(it)
                 }
-            }
-            if(InternetChecker.isOnline(getApplication())) {
-                val api = retrofit.create(MainAPI::class.java)
+            }*/
+            //не грузить данные, а тягать с сервиса, он грузит
+            //if(InternetChecker.isOnline(getApplication())) {
+                /*val api = retrofit.create(MainAPI::class.java)
                 try {
                     val chatsData = api.getChats(token)
                     if (chatsData.status == "ok") {
@@ -144,14 +150,15 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
                     }
                 } catch (t: Throwable) {
                     _error.postValue(R.string.chats_error);
-                }
-            }
-            else
-                _error.postValue(R.string.no_internet)
+                }*/
+
+            //}
+            //else
+               // _error.postValue(R.string.no_internet)
         }
     }
-    //МЕТОД С ВЫЗОВОМ API(вызвать user.getFavorite и сформировать объект юзера(FavoriteItem))
-    fun getFavorite(type: String){
+
+    fun getFavorites(type: String){
         //загружаем избранных юзеров
         vmScope.launch {
             val database = AppDatabase.getDatabase(getApplication())
@@ -184,7 +191,7 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
                 try {
                     val favoriteData = api.getFavorite(token)
                     if (favoriteData.status == "ok") {
-                        formFavorite(favoriteData.result)
+                        formFavorites(favoriteData.result.listOf)
                         favoriteList?.let{
                             if(type=="video"){
                                 favoriteList = it.filter { x-> x.isVideoAccepted } as ArrayList<FavoriteItem>
@@ -272,5 +279,9 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application) {
     }
     fun toSourceListFavorite(){
         _favoriteListLiveData.value = favoriteList
+    }
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
     }
 }

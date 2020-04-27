@@ -3,6 +3,7 @@ package com.example.twidy.ui.chats
 import android.os.Bundle
 import android.view.*
 import android.widget.*
+import android.util.Log
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.databinding.DataBindingUtil
@@ -35,15 +36,17 @@ class ChatsFragment : Fragment() {
     ): View? {
         chatsViewModel =
                 ViewModelProviders.of(this).get(ChatsViewModel::class.java)
+        activity = getActivity() as MainActivity
+        activity.chatsViewModel = chatsViewModel
         val root = inflater.inflate(R.layout.fragment_chats, container, false)
         layout = root.findViewById(R.id.layout_chats)
         chatsRecyclerView = root.findViewById(R.id.chats_view)
-        activity = getActivity() as MainActivity
         setHasOptionsMenu(true)
         chatsViewModel.resultConfirmData.value = activity.intent?.extras?.getParcelable("authConfirmData")
-        //если есть интернет, нужно подгружать чаты периодически и сравнивать изменения с локальной версией, если есть изменения, то обновлять
-        //если в оффлайне, то загрузить один раз локальную копию
+
         chatsViewModel.getChats()
+
+
         chatsViewModel.chatsListLiveData.observe(viewLifecycleOwner, Observer {
             var chatsAdapter = ChatsAdapter(
                 it,
@@ -84,6 +87,7 @@ class ChatsFragment : Fragment() {
         })
         return root
     }
+
 
     fun changeToolbarMode(adapter: ChatsAdapter){
         if (!chatsViewModel.isToolbarInEditMode) {
@@ -199,7 +203,7 @@ class ChatsFragment : Fragment() {
             popupRecyclerView = view.findViewById(R.id.rv)
             popupWindow = PopupWindow(view,ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT,true)
             popupWindow.showAtLocation(layout,Gravity.TOP,0,0)
-            chatsViewModel.getFavorite("all")
+            chatsViewModel.getFavorites("all")
             searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return true

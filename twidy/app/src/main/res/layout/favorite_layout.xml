@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/all"
-                android:onClick="@{() -> chats.getFavorite(`all`)}"/>
+                android:onClick="@{() -> chats.getFavorites(`all`)}"/>
 
             <Button
                 android:id="@+id/video_button_popup"
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/video"
-                android:onClick="@{() -> chats.getFavorite(`video`)}"/>
+                android:onClick="@{() -> chats.getFavorites(`video`)}"/>
 
             <Button
                 android:id="@+id/audio_button_popup"
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/audio"
-                android:onClick="@{() -> chats.getFavorite(`audio`)}"/>
+                android:onClick="@{() -> chats.getFavorites(`audio`)}"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

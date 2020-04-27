@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+        <service android:name=".services.ChatsUpdateService"/>
         <activity
             android:name=".ui.auth.AuthActivity"
             android:screenOrientation="portrait"
