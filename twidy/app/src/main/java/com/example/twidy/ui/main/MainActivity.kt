@@ -11,6 +11,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.twidy.R
 import com.example.twidy.services.ChatsUpdateService
 import android.util.Log
+import com.example.twidy.entities.ResultAuthData
+import com.example.twidy.entities.ResultConfirmData
 import com.example.twidy.ui.chats.vm.ChatsViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -19,11 +21,17 @@ class MainActivity : AppCompatActivity() {
     lateinit var navView: BottomNavigationView
     private lateinit var chatsUpdateService: Intent
     var chatsViewModel: ChatsViewModel? = null
+    var authData: ResultConfirmData? = null
+    lateinit var token: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navView = findViewById(R.id.nav_view)
         toolbar = findViewById(R.id.toolbar)
+        intent.getParcelableExtra<ResultConfirmData>("authData")?.let {
+            authData = it
+            token = it.access_token
+        }?: kotlin.run { token = "65240d7d04b21c60e4e3f6c73174d05e2554a27b" }
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -43,7 +51,8 @@ class MainActivity : AppCompatActivity() {
         chatsUpdateService = Intent(this,ChatsUpdateService::class.java)
         val pi = createPendingResult(1,chatsUpdateService,0)
         chatsUpdateService.putExtra("pi",pi)
-        chatsUpdateService.putExtra("token","65240d7d04b21c60e4e3f6c73174d05e2554a27b")
+        //chatsUpdateService.putExtra("token","65240d7d04b21c60e4e3f6c73174d05e2554a27b")
+        chatsUpdateService.putExtra("token",token)
         startService(chatsUpdateService)
     }
 

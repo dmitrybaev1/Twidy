@@ -42,8 +42,10 @@ class ChatsFragment : Fragment() {
         layout = root.findViewById(R.id.layout_chats)
         chatsRecyclerView = root.findViewById(R.id.chats_view)
         setHasOptionsMenu(true)
-        chatsViewModel.resultConfirmData.value = activity.intent?.extras?.getParcelable("authConfirmData")
-
+        activity.authData?.let {
+            chatsViewModel.resultConfirmData.value = activity.authData
+        }
+        chatsViewModel.token = activity.token
         chatsViewModel.getChats()
 
 

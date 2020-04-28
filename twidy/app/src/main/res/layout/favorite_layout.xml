@@ -40,7 +40,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/auth_next_button"
-                android:fontFamily="@font/sfproregular"
+                android:fontFamily="@font/sfprodisplay_regular"
                 android:onClick="@{() -> chats.closePopup()}"
                 android:text="@string/cancel"
                 android:textAlignment="textEnd"

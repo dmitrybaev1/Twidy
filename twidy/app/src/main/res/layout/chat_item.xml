@@ -21,7 +21,6 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@+id/checkBox"
-        android:src="@drawable/example"
         app:siRadius="16dp" />
 
     <TextView
@@ -36,7 +35,7 @@
         android:layout_toEndOf="@+id/avatar_view"
         android:width="230dp"
         android:height="25dp"
-        android:fontFamily="@font/sfproregular"
+        android:fontFamily="@font/sfprodisplay_regular"
         android:maxWidth="250dp"
         android:maxHeight="25dp"
         android:maxLines="1"
@@ -57,7 +56,7 @@
         android:width="200dp"
         android:height="20dp"
         android:fadingEdge="horizontal"
-        android:fontFamily="@font/sfproregular"
+        android:fontFamily="@font/sfprodisplay_regular"
         android:maxWidth="230dp"
         android:maxHeight="20dp"
         android:maxLines="1"

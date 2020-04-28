@@ -1,6 +1,7 @@
 package com.example.twidy.ui.auth
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,6 +16,7 @@ import com.example.twidy.R
 import com.example.twidy.databinding.ActivityAuthBinding
 import com.example.twidy.ui.auth.vm.AuthViewModel
 import com.example.twidy.ui.main.MainActivity
+import java.util.*
 
 //TODO переделать многое на binding
 class AuthActivity : AppCompatActivity() {
@@ -30,6 +32,12 @@ class AuthActivity : AppCompatActivity() {
     private lateinit var phoneCodeSpinner: Spinner
     private lateinit var phoneCodeAdapter: PhoneCodeSpinnerAdapter
     private lateinit var countryTextView: TextView
+    private lateinit var backLinkTextView: TextView
+    private lateinit var repeatSendCodeTextView: TextView
+    private lateinit var hintTypeface: Typeface
+    private lateinit var textTypeface: Typeface
+    private var seconds = 60
+    private var timer: Timer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         authVm = ViewModelProviders.of(this).get(AuthViewModel::class.java)
@@ -48,6 +56,10 @@ class AuthActivity : AppCompatActivity() {
         codeEditText = findViewById(R.id.code_edittext)
         countryTextView = findViewById(R.id.country_textview)
         phoneCodeSpinner = findViewById(R.id.phone_spinner)
+        backLinkTextView = findViewById(R.id.back_link_textview)
+        repeatSendCodeTextView = findViewById(R.id.repeat_number_textview)
+        hintTypeface = Typeface.createFromAsset(assets,"res/font/sfprodisplay_regular.ttf")
+        textTypeface = Typeface.createFromAsset(assets,"res/font/sfprodisplay_semibold.ttf")
         phoneEditText.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
 
@@ -58,7 +70,14 @@ class AuthActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(p0!!.length<10)
+                if(p0!!.isNotEmpty()){
+                    phoneEditText.typeface = textTypeface
+                }
+                else{
+                    phoneEditText.typeface = hintTypeface
+                }
+
+                if(p0.length<10)
                     getCodeButton.visibility=View.INVISIBLE
                 else
                     getCodeButton.visibility=View.VISIBLE
@@ -75,16 +94,28 @@ class AuthActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(p0!!.length<6)
+                if(p0!!.isNotEmpty()){
+                    codeEditText.typeface = textTypeface
+                }
+                else{
+                    codeEditText.typeface = hintTypeface
+                }
+
+                if(p0.length<6)
                     nextCheckButton.visibility=View.INVISIBLE
                 else
                     nextCheckButton.visibility=View.VISIBLE
             }
 
         })
+        backLinkTextView.setOnClickListener {
+            if(seconds==0){
+                firstStepLayout.visibility = View.VISIBLE
+                secondStepLayout.visibility = View.GONE
+            }
+        }
         authVm.getCountries()
         authVm.next.observe(this, Observer {
-            //TODO: переходы можно заанимировать
             if(it<viewFlipper.childCount)
                 viewFlipper.showNext()
             else {
@@ -114,6 +145,10 @@ class AuthActivity : AppCompatActivity() {
         authVm.auth.observe(this, Observer { authData ->
             firstStepLayout.visibility = View.GONE
             secondStepLayout.visibility = View.VISIBLE
+            seconds=60
+            timer?.let { it.cancel() }
+            timer = Timer()
+            timer!!.schedule(RepeatNumberTimerTask(),1000,1000)
         })
         authVm.spinnerItemPosition.observe(this, Observer {
             authVm.phoneCountry.value = phoneCodeAdapter.getItem(it)
@@ -122,8 +157,23 @@ class AuthActivity : AppCompatActivity() {
         authVm.confirm.observe(this, Observer {confirmData ->
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            intent.putExtra("authConfirmResult",confirmData.result)
+            intent.putExtra("authData",confirmData.result)
             startActivity(intent)
         })
+    }
+    inner class RepeatNumberTimerTask : TimerTask(){
+        override fun run() {
+            if(seconds==60)
+                runOnUiThread { repeatSendCodeTextView.visibility = View.VISIBLE}
+            if(seconds>0) {
+                seconds--
+                runOnUiThread { repeatSendCodeTextView.text = getString(R.string.repeat_number, seconds) }
+            }
+            else if(seconds==0) {
+                cancel()
+                runOnUiThread {  repeatSendCodeTextView.visibility = View.GONE }
+            }
+        }
+
     }
 }

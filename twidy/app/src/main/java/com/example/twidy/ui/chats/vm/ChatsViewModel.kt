@@ -26,7 +26,7 @@ import kotlin.coroutines.CoroutineContext
 @Parcelize
 class ChatsViewModel(var app: @RawValue Application) : AndroidViewModel(app), Parcelable {
 
-    private val token = "65240d7d04b21c60e4e3f6c73174d05e2554a27b"
+    var token = "65240d7d04b21c60e4e3f6c73174d05e2554a27b"
 
     val resultConfirmData = MutableLiveData<ResultConfirmData>()
 
@@ -160,6 +160,7 @@ class ChatsViewModel(var app: @RawValue Application) : AndroidViewModel(app), Pa
 
     fun getFavorites(type: String){
         //загружаем избранных юзеров
+        val token = resultConfirmData.value!!.access_token
         vmScope.launch {
             val database = AppDatabase.getDatabase(getApplication())
             var localFavoriteList = database.favoriteItemDao().getAll() as ArrayList<FavoriteItem>
@@ -228,6 +229,7 @@ class ChatsViewModel(var app: @RawValue Application) : AndroidViewModel(app), Pa
     }
     //По хорошему надо проверять статус api.archive, соответственно надо переделать возвращаемое значение с Unit на ArchiveData
     fun archiveChats(){
+        val token = resultConfirmData.value!!.access_token
         vmScope.launch {
             if(InternetChecker.isOnline(getApplication())) {
                 val arcList = chatsList!!.filter { x -> x.checked } as ArrayList<ChatItem>

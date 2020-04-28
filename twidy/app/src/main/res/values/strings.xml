@@ -16,12 +16,29 @@
     <string name="no_internet">Нет подключения к интернету</string>
     <string name="decrypt_error">Ошибка дешифрования</string>
 
+    <!--START SLIDES-->
     <string name="skip_slide">Skip</string>
+    <string name="first_slide_desc">Простой способ связаться \nс блогерами, \nмедиа-звездами \nи экспертами.</string>
+    <string name="second_slide_title">Общайтесь \nс кумирами</string>
+    <string name="second_slide_desc">Задавайте вопросы \nпрофессионалам, блогерам, \nзвездам, спортсменам.\n
+        \nПросто отправьте платное \nсообщение и получите \nбыстрый и подробный ответ \nна Ваш вопрос.</string>
+    <string name="third_slide_title">Получайте \nуникальные \nвидео</string>
+    <string name="third_slide_desc">Вы можете заказать \nперсонализированные \nвидео-ролики \nот своих
+        любимых \nзнаменитостей, спортсменов \nили влиятельных лиц.</string>
+    <string name="fourth_slide_title">Зарабатывайте</string>
+    <string name="fourth_slide_desc">Установите стоимость \nконтакта с вами и получайте \nденьги за каждый ответ.\n
+        \nВедите платные каналы, \nделитесь уникальным \nконтентом и зарабатывайте.</string>
+
+
+
     <string name="title_authorization">Авторизация</string>
-    <string name="check_country_code">Проверьте код страны и введите свой номер телефона</string>
+    <string name="check_country_code">Проверьте код страны \nи введите свой номер телефона</string>
+    <string name="phone_number_hint">Номер телефона</string>
     <string name="get_code">Получить код проверки</string>
     <string name="checkcode">Код проверки</string>
-    <string name="we_sent_code">Мы отправили код проверки на указанный вами телефон</string>
+    <string name="we_sent_code">Мы отправили код проверки \nна указанный Вами номер телефон</string>
+    <string name="incorrect_number_question">Неверный номер телефона? <font color="#615dfa">Введите правильный</font></string>
+    <string name="repeat_number">Повторная отправка возможна через %1$d секунд.</string>
     <string name="next">Далее</string>
     <string name="check_all">Выбрать все</string>
     <string name="all">Чат</string>

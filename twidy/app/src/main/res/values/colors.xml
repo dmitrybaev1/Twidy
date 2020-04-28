@@ -9,6 +9,8 @@
     <color name="colorText">#4E3F6F</color>
     <color name="colorHint">#8c8cb6</color>
     <color name="colorButton">#6c53e7</color>
+    <color name="colorLink">#615dfa</color>
     <color name="colorCostFrame">#FFA012</color>
     <color name="colorBackgroundSecondary">#EFF0F6</color>
+    <color name="lightGray">#E1E2EB</color>
 </resources>

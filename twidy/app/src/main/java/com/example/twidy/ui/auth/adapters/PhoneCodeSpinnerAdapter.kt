@@ -30,7 +30,7 @@ class PhoneCodeSpinnerAdapter(ctx: Context,var res: Int,var list: ArrayList<Coun
         countryNameTextView.text = list[position].name
         countryCodeTextView.text = list[position].phonecode.toString()
         return view*/
-        val view = inflater.inflate(res,parent,false)
+        val view = inflater.inflate(R.layout.code_spinner_item_dropdown,parent,false)
         val countryCodeTextView = view.findViewById<TextView>(R.id.country_code_textview)
         countryCodeTextView.text = "+"+list[position].phonecode.toString()
         return view

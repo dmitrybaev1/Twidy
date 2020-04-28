@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "118994994523",
+    "firebase_url": "https://twidy-1547d.firebaseio.com",
+    "project_id": "twidy-1547d",
+    "storage_bucket": "twidy-1547d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118994994523:android:eb092d6e222bcf2180c67e",
+        "android_client_info": {
+          "package_name": "com.example.twidy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "118994994523-svqut691vj33cnuclhjm4rp8ftea3824.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH6JBTozoLGPYnrTHKMSCipq1bqvKWXxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118994994523-svqut691vj33cnuclhjm4rp8ftea3824.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
