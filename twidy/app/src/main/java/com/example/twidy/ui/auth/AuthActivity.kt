@@ -39,6 +39,7 @@ class AuthActivity : AppCompatActivity() {
     private var seconds = 60
     private var timer: Timer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         authVm = ViewModelProviders.of(this).get(AuthViewModel::class.java)
         val binding: ActivityAuthBinding = DataBindingUtil.setContentView(
