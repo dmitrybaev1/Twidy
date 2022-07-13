@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:button="@drawable/checkbox_selector"
+        android:visibility="gone" />
+
+    <com.github.siyamed.shapeimageview.RoundedImageView
+        android:id="@+id/avatar_view"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/checkBox"
+        app:siRadius="16dp" />
+
+    <TextView
+        android:id="@+id/person_name_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="65dp"
+        android:layout_toEndOf="@+id/avatar_view"
+        android:width="230dp"
+        android:height="25dp"
+        android:fontFamily="@font/sfprodisplay_regular"
+        android:maxWidth="250dp"
+        android:maxHeight="25dp"
+        android:maxLines="1"
+        android:text="TextView"
+        android:textColor="@color/colorText"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/last_message_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/person_name_view"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="96dp"
+        android:layout_toEndOf="@+id/avatar_view"
+        android:width="200dp"
+        android:height="20dp"
+        android:fadingEdge="horizontal"
+        android:fontFamily="@font/sfprodisplay_regular"
+        android:maxWidth="230dp"
+        android:maxHeight="20dp"
+        android:maxLines="1"
+        android:text="TextView"
+        android:textColor="@color/colorHint"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/cost_view"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="13dp"
+        android:height="20dp"
+        android:background="@drawable/chat_new_textview"
+        android:fontFamily="@font/sfprodisplay_medium"
+        android:gravity="center"
+        android:maxWidth="50dp"
+        android:maxHeight="20dp"
+        android:minWidth="30dp"
+        android:text="10000$"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+</RelativeLayout>

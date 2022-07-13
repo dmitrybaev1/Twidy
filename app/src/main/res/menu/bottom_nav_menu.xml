@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_recommendations"
+        android:title=""
+        android:icon="@drawable/home_icon"/>
+
+    <item
+        android:id="@+id/navigation_chats"
+        android:title=""
+        android:icon="@drawable/chats_icon"/>
+
+    <item
+        android:id="@+id/navigation_calls"
+        android:title=""
+        android:icon="@drawable/call_icon"/>
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:title=""
+        android:icon="@drawable/settings_icon"/>
+
+</menu>

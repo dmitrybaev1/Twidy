@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6c53e7</color>
+    <color name="colorPrimaryDark">#6c53e7</color>
+    <color name="colorAccent">#8c8cb6</color>
+    <color name="colorBackground">#f2f2fe</color>
+    <color name="bottom_bar_color">#D9F2F2FE</color>
+    <color name="white">#ffffff</color>
+    <color name="colorText">#4E3F6F</color>
+    <color name="colorHint">#8c8cb6</color>
+    <color name="colorButton">#6c53e7</color>
+    <color name="colorLink">#615dfa</color>
+    <color name="colorCostFrame">#FFA012</color>
+    <color name="colorBackgroundSecondary">#EFF0F6</color>
+    <color name="lightGray">#E1E2EB</color>
+</resources>
