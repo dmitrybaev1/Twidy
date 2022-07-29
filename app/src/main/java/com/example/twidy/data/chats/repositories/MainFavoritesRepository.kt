@@ -8,7 +8,7 @@ import com.example.twidy.data.chats.datasources.FavoritesLocalDataSource
 import com.example.twidy.data.chats.datasources.FavoritesRemoteDataSource
 import com.example.twidy.data.entities.FavoriteUser
 import com.example.twidy.mappers.FavoriteMapper
-import com.example.twidy.ui.chats.items.FavoriteItem
+import com.example.twidy.data.chats.entities.FavoriteItem
 import com.example.twidy.utils.InternetChecker
 import javax.inject.Inject
 

@@ -1,10 +1,10 @@
 package com.example.twidy.di
 
 import com.example.twidy.data.api.AuthAPI
-import com.example.twidy.data.chats.datasources.AuthDataSource
-import com.example.twidy.data.chats.datasources.MainAuthDataSource
-import com.example.twidy.data.chats.repositories.AuthRepository
-import com.example.twidy.data.chats.repositories.MainAuthRepository
+import com.example.twidy.data.auth.datasources.AuthDataSource
+import com.example.twidy.data.auth.datasources.MainAuthDataSource
+import com.example.twidy.data.auth.repositories.AuthRepository
+import com.example.twidy.data.auth.repositories.MainAuthRepository
 import com.example.twidy.utils.RetrofitBuilder
 import dagger.Binds
 import dagger.Module

@@ -1,7 +1,7 @@
 package com.example.twidy.data.chats.dao
 
 import androidx.room.*
-import com.example.twidy.ui.chats.items.FavoriteItem
+import com.example.twidy.data.chats.entities.FavoriteItem
 
 @Dao
 interface FavoriteItemDao {

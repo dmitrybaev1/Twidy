@@ -1,7 +1,7 @@
 package com.example.twidy.mappers
 
 import com.example.twidy.data.entities.Chat
-import com.example.twidy.ui.chats.items.ChatItem
+import com.example.twidy.data.chats.entities.ChatItem
 
 object ChatMapper {
     fun chatToChatItem(chat: Chat): ChatItem = ChatItem(

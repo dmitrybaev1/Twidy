@@ -1,7 +1,7 @@
 package com.example.twidy.data.chats.datasources
 
 import com.example.twidy.data.database.AppDatabase
-import com.example.twidy.ui.chats.items.FavoriteItem
+import com.example.twidy.data.chats.entities.FavoriteItem
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

@@ -5,14 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.example.twidy.ui.chats.items.ChatItem
+import com.example.twidy.data.chats.entities.ChatItem
 import com.example.twidy.R
 import com.example.twidy.ui.MainActivity
 import com.example.twidy.ui.chats.ChatsViewModel
 import com.github.siyamed.shapeimageview.RoundedImageView
 import com.squareup.picasso.Picasso
 
-class ChatsAdapter(private val list: List<ChatItem>,private val activity: MainActivity,private val vm: ChatsViewModel) : RecyclerView.Adapter<ChatsAdapter.ChatsHolder>() {
+class ChatsAdapter(private val list: List<ChatItem>, private val activity: MainActivity, private val vm: ChatsViewModel) : RecyclerView.Adapter<ChatsAdapter.ChatsHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatsHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.chat_item,parent,false)
