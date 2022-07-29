@@ -14,6 +14,7 @@ import com.example.twidy.domain.GetChatsUseCase
 import com.example.twidy.domain.GetFavoritesUseCase
 import com.example.twidy.data.chats.entities.ChatItem
 import com.example.twidy.data.chats.entities.FavoriteItem
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -59,16 +60,18 @@ class ChatsViewModel : ViewModel() {
 
     fun fetchChats(){
         viewModelScope.launch {
-            when(val result = getChatsUseCase(resultConfirmData.access_token)){
-                is Success<List<ChatItem>> -> {
-                    chatsList = result.data as ArrayList<ChatItem>
-                    chatsList.sortByDescending { it.timestamp }
-                    _chatsListLiveData.value = chatsList
-                    if(!result.isRemote)
-                        _error.value = R.string.no_internet
+            getChatsUseCase(resultConfirmData.access_token).collect{result ->
+                when(result){
+                    is Success<List<ChatItem>> -> {
+                        chatsList = result.data as ArrayList<ChatItem>
+                        chatsList.sortByDescending { it.timestamp }
+                        _chatsListLiveData.value = chatsList
+                        if(!result.isRemote)
+                            _error.value = R.string.no_internet
+                    }
+                    is Failure -> _apiError.value = result.message
+                    is NetworkFailure -> _error.value = R.string.chats_error
                 }
-                is Failure -> _apiError.value = result.message
-                is NetworkFailure -> _error.value = R.string.chats_error
             }
         }
     }

@@ -8,6 +8,7 @@ import com.example.twidy.ui.chats.ChatsViewModel
 import com.example.twidy.data.chats.entities.ChatItem
 import com.example.twidy.data.chats.entities.FavoriteItem
 import com.example.twidy.ui.chats.FavoritesType
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -33,21 +34,15 @@ class ChatsViewModelTest {
         }
     }
 
-    /*private fun fetchCorrectFavorites() = runTest {
-        val favorites = arrayListOf(mock<FavoriteItem>(), mock(),mock())
-        whenever(viewModel.getFavoritesUseCase.invoke(any())).thenReturn(Success(favorites,true))
-        viewModel.fetchFavorites(FavoritesType.ALL)
-    }*/
-
     private fun fetchCorrectChats() = runTest {
         val chats = arrayListOf(mock<ChatItem>{on{checked} doReturn(true)}, mock(), mock())
-        whenever(viewModel.getChatsUseCase.invoke(any())).thenReturn(Success(chats, true))
+        whenever(viewModel.getChatsUseCase.invoke(any())).thenReturn(flow{emit(Success(chats, true))})
         viewModel.fetchChats()
     }
 
     private fun fetchUnselectedChats() = runTest {
         val chats = arrayListOf(mock<ChatItem>{on{checked} doReturn(false)})
-        whenever(viewModel.getChatsUseCase.invoke(any())).thenReturn(Success(chats, true))
+        whenever(viewModel.getChatsUseCase.invoke(any())).thenReturn(flow{emit(Success(chats, true))})
         viewModel.fetchChats()
     }
 
@@ -59,14 +54,14 @@ class ChatsViewModelTest {
 
     @Test
     fun `Get chats api error`() = runTest {
-        whenever(viewModel.getChatsUseCase.invoke(any())).thenReturn(Failure("api error"))
+        whenever(viewModel.getChatsUseCase.invoke(any())).thenReturn(flow{emit(Failure("api error"))})
         viewModel.fetchChats()
         assertEquals("api error",viewModel.apiError.value)
     }
 
     @Test
     fun `Get chats network error`() = runTest {
-        whenever(viewModel.getChatsUseCase.invoke(any())).thenReturn(NetworkFailure)
+        whenever(viewModel.getChatsUseCase.invoke(any())).thenReturn(flow{emit(NetworkFailure)})
         viewModel.fetchChats()
         assertEquals(R.string.chats_error,viewModel.error.value)
     }
