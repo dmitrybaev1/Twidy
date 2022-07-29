@@ -1,7 +1,7 @@
 package com.example.twidy.data.chats.dao
 
 import androidx.room.*
-import com.example.twidy.ui.chats.items.ChatItem
+import com.example.twidy.data.chats.entities.ChatItem
 
 
 @Dao

@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.twidy.ui.chats.items.FavoriteItem
+import com.example.twidy.data.chats.entities.FavoriteItem
 import com.example.twidy.R
 import com.github.siyamed.shapeimageview.RoundedImageView
 import com.squareup.picasso.Picasso

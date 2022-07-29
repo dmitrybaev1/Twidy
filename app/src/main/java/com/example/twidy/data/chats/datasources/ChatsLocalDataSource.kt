@@ -1,6 +1,6 @@
 package com.example.twidy.data.chats.datasources
 
-import com.example.twidy.ui.chats.items.ChatItem
+import com.example.twidy.data.chats.entities.ChatItem
 
 interface ChatsLocalDataSource {
 
@@ -10,5 +10,4 @@ interface ChatsLocalDataSource {
 
     suspend fun deleteChats(chats: List<ChatItem>)
 
-    suspend fun deleteChat(chat: ChatItem)
 }

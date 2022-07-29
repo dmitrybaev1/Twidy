@@ -9,12 +9,11 @@ import com.example.twidy.data.api.Failure
 import com.example.twidy.data.api.NetworkFailure
 import com.example.twidy.data.api.Success
 import com.example.twidy.data.entities.*
-import com.example.twidy.domain.ArchiveChatUseCase
 import com.example.twidy.domain.ArchiveChatsUseCase
 import com.example.twidy.domain.GetChatsUseCase
 import com.example.twidy.domain.GetFavoritesUseCase
-import com.example.twidy.ui.chats.items.ChatItem
-import com.example.twidy.ui.chats.items.FavoriteItem
+import com.example.twidy.data.chats.entities.ChatItem
+import com.example.twidy.data.chats.entities.FavoriteItem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,9 +27,6 @@ class ChatsViewModel : ViewModel() {
 
     @Inject
     lateinit var archiveChatsUseCase: ArchiveChatsUseCase
-
-    @Inject
-    lateinit var archiveChatUseCase: ArchiveChatUseCase
 
     lateinit var resultConfirmData: ResultConfirmData
 
@@ -104,22 +100,13 @@ class ChatsViewModel : ViewModel() {
     fun archiveChats(){
         viewModelScope.launch {
             val arcList = chatsList.filter { x -> x.checked }
-            //var s = ""
             if(arcList.isEmpty()) {
-                _error.postValue(R.string.choose_chats)
+                _error.value = R.string.choose_chats
                 return@launch
             }
-            if (arcList.size > 1) {
-                when(archiveChatsUseCase(resultConfirmData.access_token,arcList)){
-                    is Success<String> -> sync()
-                    else -> _error.value = R.string.archive_error
-                }
-            }
-            else if(arcList.size == 1){
-                when(archiveChatUseCase(resultConfirmData.access_token,arcList[0])){
-                    is Success<String> -> sync()
-                    else -> _error.value = R.string.archive_error
-                }
+            when(archiveChatsUseCase(resultConfirmData.access_token,arcList)){
+                is Success<String> -> sync()
+                else -> _error.value = R.string.archive_error
             }
         }
     }
@@ -138,7 +125,7 @@ class ChatsViewModel : ViewModel() {
     }
 
     fun checkAllChats(){
-        chatsList!!.forEach { x -> x.checked=true }
+        chatsList.forEach { x -> x.checked=true }
         _chatsListLiveData.value = chatsList
     }
     fun toSourceListChats(){

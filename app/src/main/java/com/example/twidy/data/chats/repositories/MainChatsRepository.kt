@@ -8,7 +8,7 @@ import com.example.twidy.data.chats.datasources.ChatsLocalDataSource
 import com.example.twidy.data.chats.datasources.ChatsRemoteDataSource
 import com.example.twidy.data.entities.Chat
 import com.example.twidy.mappers.ChatMapper
-import com.example.twidy.ui.chats.items.ChatItem
+import com.example.twidy.data.chats.entities.ChatItem
 import com.example.twidy.utils.CryptLib
 import com.example.twidy.utils.InternetChecker
 import kotlinx.coroutines.Dispatchers
@@ -42,26 +42,9 @@ class MainChatsRepository @Inject constructor(
 
     override suspend fun archiveChats(token: String,chats: List<ChatItem>): Result<String>{
         return if(internetChecker.isOnline) {
-            var ids = ""
-            for (i in chats.indices) {
-                ids += if (chats[i] == chats[chats.size - 1])
-                    chats[i].id.toString()
-                else
-                    chats[i].id.toString() + ","
-            }
-            val result = chatsRemoteDataSource.archiveChats(token,ids)
+            val result = chatsRemoteDataSource.archiveChats(token,chats)
             if(result is Success<String>)
                 chatsLocalDataSource.deleteChats(chats)
-            result
-        } else
-            NetworkFailure
-    }
-
-    override suspend fun archiveChat(token: String, chat: ChatItem): Result<String>{
-        return if(internetChecker.isOnline) {
-            val result = chatsRemoteDataSource.archiveChat(token,chat.id)
-            if(result is Success<String>)
-                chatsLocalDataSource.deleteChat(chat)
             result
         } else
             NetworkFailure

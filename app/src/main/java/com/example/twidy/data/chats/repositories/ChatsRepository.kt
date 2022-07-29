@@ -1,7 +1,7 @@
 package com.example.twidy.data.chats.repositories
 
 import com.example.twidy.data.api.Result
-import com.example.twidy.ui.chats.items.ChatItem
+import com.example.twidy.data.chats.entities.ChatItem
 
 interface ChatsRepository {
 
@@ -9,5 +9,4 @@ interface ChatsRepository {
 
     suspend fun archiveChats(token: String, chats: List<ChatItem>): Result<String>
 
-    suspend fun archiveChat(token: String, chat: ChatItem): Result<String>
 }

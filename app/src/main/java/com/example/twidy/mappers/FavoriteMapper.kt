@@ -1,7 +1,7 @@
 package com.example.twidy.mappers
 
 import com.example.twidy.data.entities.FavoriteUser
-import com.example.twidy.ui.chats.items.FavoriteItem
+import com.example.twidy.data.chats.entities.FavoriteItem
 
 object FavoriteMapper {
     fun favoriteUserToFavoriteItem(favoriteUser: FavoriteUser): FavoriteItem = FavoriteItem(
