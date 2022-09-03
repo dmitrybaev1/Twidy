@@ -1,13 +1,13 @@
 package com.example.twidy.data.chats.repositories
 
-import com.example.twidy.data.api.Result
-import com.example.twidy.data.chats.entities.ChatItem
+import com.example.twidy.domain.Result
+import com.example.twidy.domain.entities.Chat
 import kotlinx.coroutines.flow.Flow
 
 interface ChatsRepository {
 
-    fun fetchChats(token: String): Flow<Result<List<ChatItem>>>
+    fun fetchChats(token: String): Flow<Result<List<Chat>>>
 
-    suspend fun archiveChats(token: String, chats: List<ChatItem>): Result<String>
+    suspend fun archiveChats(token: String, chats: List<Chat>): Result<String>
 
 }

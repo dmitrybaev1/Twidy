@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.twidy.*
-import com.example.twidy.data.api.Failure
-import com.example.twidy.data.api.NetworkFailure
-import com.example.twidy.data.api.Success
-import com.example.twidy.data.entities.*
-import com.example.twidy.domain.AuthConfirmUseCase
-import com.example.twidy.domain.AuthUseCase
-import com.example.twidy.domain.GetCountriesUseCase
-import com.example.twidy.domain.GetLocationUseCase
+import com.example.twidy.domain.Failure
+import com.example.twidy.domain.NetworkFailure
+import com.example.twidy.domain.Success
+import com.example.twidy.data.response.*
+import com.example.twidy.domain.usecases.AuthConfirmUseCase
+import com.example.twidy.domain.usecases.AuthUseCase
+import com.example.twidy.domain.usecases.GetCountriesUseCase
+import com.example.twidy.domain.usecases.GetLocationUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

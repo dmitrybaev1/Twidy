@@ -1,8 +1,8 @@
 package com.example.twidy.data.chats.datasources
 
-import com.example.twidy.data.api.Result
-import com.example.twidy.data.entities.FavoriteUser
+import com.example.twidy.domain.Result
+import com.example.twidy.domain.entities.Favorite
 
 interface FavoritesRemoteDataSource {
-    suspend fun fetchFavorites(token: String): Result<List<FavoriteUser>>
+    suspend fun fetchFavorites(token: String): Result<List<Favorite>>
 }

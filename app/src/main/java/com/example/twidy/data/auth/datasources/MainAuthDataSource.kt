@@ -1,9 +1,13 @@
 package com.example.twidy.data.auth.datasources
 
 import com.example.twidy.data.api.*
-import com.example.twidy.data.entities.Country
-import com.example.twidy.data.entities.Location
-import com.example.twidy.data.entities.ResultConfirmData
+import com.example.twidy.data.response.Country
+import com.example.twidy.data.response.Location
+import com.example.twidy.data.response.ResultConfirmData
+import com.example.twidy.domain.Failure
+import com.example.twidy.domain.NetworkFailure
+import com.example.twidy.domain.Result
+import com.example.twidy.domain.Success
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

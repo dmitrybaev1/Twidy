@@ -1,9 +1,9 @@
 package com.example.twidy.data.auth.repositories
 
-import com.example.twidy.data.api.Result
-import com.example.twidy.data.entities.Country
-import com.example.twidy.data.entities.Location
-import com.example.twidy.data.entities.ResultConfirmData
+import com.example.twidy.domain.Result
+import com.example.twidy.data.response.Country
+import com.example.twidy.data.response.Location
+import com.example.twidy.data.response.ResultConfirmData
 
 interface AuthRepository {
 

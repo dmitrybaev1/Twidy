@@ -1,9 +1,9 @@
 package com.example.twidy.data.api
 
-import com.example.twidy.data.entities.ChatData
-import com.example.twidy.data.entities.ChatsData
-import com.example.twidy.data.entities.FavoriteData
-import com.example.twidy.data.entities.MessagesData
+import com.example.twidy.data.response.ChatData
+import com.example.twidy.data.response.ChatsData
+import com.example.twidy.data.response.FavoriteData
+import com.example.twidy.data.response.MessagesData
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query

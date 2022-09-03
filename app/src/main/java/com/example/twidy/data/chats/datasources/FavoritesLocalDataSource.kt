@@ -1,10 +1,10 @@
 package com.example.twidy.data.chats.datasources
 
-import com.example.twidy.data.chats.entities.FavoriteItem
+import com.example.twidy.domain.entities.Favorite
 
 interface FavoritesLocalDataSource {
 
-    suspend fun fetchFavorites(): List<FavoriteItem>
+    suspend fun fetchFavorites(): List<Favorite>
 
-    suspend fun saveFavorites(favorites: List<FavoriteItem>)
+    suspend fun saveFavorites(favorites: List<Favorite>)
 }

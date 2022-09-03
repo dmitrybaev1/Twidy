@@ -5,16 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.twidy.*
-import com.example.twidy.data.api.Failure
-import com.example.twidy.data.api.NetworkFailure
-import com.example.twidy.data.api.Success
-import com.example.twidy.data.entities.*
-import com.example.twidy.domain.ArchiveChatsUseCase
-import com.example.twidy.domain.GetChatsUseCase
-import com.example.twidy.domain.GetFavoritesUseCase
-import com.example.twidy.data.chats.entities.ChatItem
-import com.example.twidy.data.chats.entities.FavoriteItem
-import kotlinx.coroutines.delay
+import com.example.twidy.domain.Failure
+import com.example.twidy.domain.NetworkFailure
+import com.example.twidy.domain.Success
+import com.example.twidy.data.response.*
+import com.example.twidy.domain.entities.Chat
+import com.example.twidy.domain.entities.Favorite
+import com.example.twidy.domain.usecases.ArchiveChatsUseCase
+import com.example.twidy.domain.usecases.GetChatsUseCase
+import com.example.twidy.domain.usecases.GetFavoritesUseCase
+import com.example.twidy.ui.chats.entities.ChatItem
+import com.example.twidy.ui.chats.entities.FavoriteItem
+import com.example.twidy.ui.chats.mappers.ChatItemMapper
+import com.example.twidy.ui.chats.mappers.FavoriteItemMapper
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,6 +31,12 @@ class ChatsViewModel : ViewModel() {
 
     @Inject
     lateinit var archiveChatsUseCase: ArchiveChatsUseCase
+
+    @Inject
+    lateinit var chatItemMapper: ChatItemMapper
+
+    @Inject
+    lateinit var favoriteItemMapper: FavoriteItemMapper
 
     lateinit var resultConfirmData: ResultConfirmData
 
@@ -58,12 +67,13 @@ class ChatsViewModel : ViewModel() {
         fetchChats()
     }
 
+
     fun fetchChats(){
         viewModelScope.launch {
             getChatsUseCase(resultConfirmData.access_token).collect{result ->
                 when(result){
-                    is Success<List<ChatItem>> -> {
-                        chatsList = result.data as ArrayList<ChatItem>
+                    is Success<List<Chat>> -> {
+                        chatsList = chatItemMapper.fromChatToChatItem(result.data) as ArrayList<ChatItem>
                         chatsList.sortByDescending { it.timestamp }
                         _chatsListLiveData.value = chatsList
                         if(!result.isRemote)
@@ -80,8 +90,8 @@ class ChatsViewModel : ViewModel() {
     fun fetchFavorites(type: FavoritesType) {
         viewModelScope.launch {
             when (val result = getFavoritesUseCase(resultConfirmData.access_token)) {
-                is Success<List<FavoriteItem>> -> {
-                    favoriteList = result.data as ArrayList<FavoriteItem>
+                is Success<List<Favorite>> -> {
+                    favoriteList = favoriteItemMapper.fromFavoriteToFavoriteItem(result.data) as ArrayList<FavoriteItem>
                     if (type == FavoritesType.VIDEO)
                         favoriteList =
                             favoriteList.filter { x -> x.isVideoAccepted } as ArrayList<FavoriteItem>
@@ -107,7 +117,7 @@ class ChatsViewModel : ViewModel() {
                 _error.value = R.string.choose_chats
                 return@launch
             }
-            when(archiveChatsUseCase(resultConfirmData.access_token,arcList)){
+            when(archiveChatsUseCase(resultConfirmData.access_token,chatItemMapper.fromChatItemToChat(arcList))){
                 is Success<String> -> sync()
                 else -> _error.value = R.string.archive_error
             }

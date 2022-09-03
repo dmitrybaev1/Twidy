@@ -17,7 +17,7 @@ import com.example.twidy.databinding.FavoriteLayoutBinding
 import com.example.twidy.ui.MainActivity
 import com.example.twidy.ui.chats.adapters.ChatsAdapter
 import com.example.twidy.ui.chats.adapters.FavoriteSection
-import com.example.twidy.data.chats.entities.FavoriteItem
+import com.example.twidy.ui.chats.entities.FavoriteItem
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 
 class ChatsFragment : Fragment() {

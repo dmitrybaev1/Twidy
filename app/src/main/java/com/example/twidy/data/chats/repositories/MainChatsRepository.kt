@@ -1,12 +1,12 @@
 package com.example.twidy.data.chats.repositories
 
-import com.example.twidy.data.api.NetworkFailure
-import com.example.twidy.data.api.Result
-import com.example.twidy.data.api.Success
+import com.example.twidy.domain.NetworkFailure
+import com.example.twidy.domain.Result
+import com.example.twidy.domain.Success
 import com.example.twidy.data.chats.datasources.ChatsLocalDataSource
 import com.example.twidy.data.chats.datasources.ChatsRemoteDataSource
-import com.example.twidy.data.chats.entities.ChatItem
-import com.example.twidy.utils.InternetChecker
+import com.example.twidy.domain.entities.Chat
+import com.example.twidy.domain.InternetChecker
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,7 +20,7 @@ class MainChatsRepository @Inject constructor(
 
     private val refreshInterval = 5000L
 
-    override fun fetchChats(token: String): Flow<Result<List<ChatItem>>> =
+    override fun fetchChats(token: String): Flow<Result<List<Chat>>> =
         flow{
             while(true) {
                 if (internetChecker.isOnline)
@@ -31,7 +31,7 @@ class MainChatsRepository @Inject constructor(
             }
         }
 
-    override suspend fun archiveChats(token: String,chats: List<ChatItem>): Result<String>{
+    override suspend fun archiveChats(token: String,chats: List<Chat>): Result<String> {
         return if(internetChecker.isOnline) {
             val result = chatsRemoteDataSource.archiveChats(token,chats)
             if(result is Success<String>)
