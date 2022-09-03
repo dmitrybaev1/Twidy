@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.twidy.R
-import com.example.twidy.data.entities.Country
-import com.example.twidy.data.entities.Location
+import com.example.twidy.data.response.Country
+import com.example.twidy.data.response.Location
 
 class PhoneCodeSpinnerAdapter(ctx: Context,var res: Int,var list: ArrayList<Country> ) : ArrayAdapter<Country>(ctx,res,list) {
     private val inflater = LayoutInflater.from(ctx)

@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.example.twidy.data.chats.entities.ChatItem
+import com.example.twidy.ui.chats.entities.ChatItem
 import com.example.twidy.R
 import com.example.twidy.ui.MainActivity
 import com.example.twidy.ui.chats.ChatsViewModel
@@ -80,26 +80,4 @@ class ChatsAdapter(private val list: List<ChatItem>, private val activity: MainA
             newMessagesView = v.findViewById(R.id.cost_view)
         }
     }
-
-    /*fun changeMode(){
-        if (!activity.isInEditModeChats) {
-            activity.isInEditModeChats = true
-            activity.navView.visibility = View.GONE
-            activity.setSupportActionBar(activity.toolbar)
-            activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            for (i in list.indices) {
-                list[i].inCheckedMode = true
-                notifyItemChanged(i)
-            }
-        } else {
-            activity.isInEditModeChats = false
-            activity.navView.visibility = View.VISIBLE
-            activity.setSupportActionBar(activity.toolbar)
-            activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-            for (i in list.indices) {
-                list[i].inCheckedMode = false
-                list[i].checked = false
-                notifyItemChanged(i)
-            }
-        }*/
 }

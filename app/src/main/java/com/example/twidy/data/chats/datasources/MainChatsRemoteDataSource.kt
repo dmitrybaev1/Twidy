@@ -1,32 +1,31 @@
 package com.example.twidy.data.chats.datasources
 
 import com.example.twidy.data.api.*
-import com.example.twidy.data.entities.Chat
-import com.example.twidy.data.chats.entities.ChatItem
-import com.example.twidy.mappers.ChatMapper
-import com.example.twidy.utils.CryptLib
+import com.example.twidy.data.chats.mappers.ChatResponseMapper
+import com.example.twidy.domain.Failure
+import com.example.twidy.domain.NetworkFailure
+import com.example.twidy.domain.Result
+import com.example.twidy.domain.Success
+import com.example.twidy.domain.entities.Chat
+import com.example.twidy.data.CryptLib
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MainChatsRemoteDataSource @Inject constructor(
     private val chatsAPI: ChatsAPI,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
+    private val chatResponseMapper: ChatResponseMapper
     ): ChatsRemoteDataSource {
 
     private val cryptLib = CryptLib()
 
-    override suspend fun fetchChats(token: String): Result<List<ChatItem>> =
+    override suspend fun fetchChats(token: String): Result<List<Chat>> =
         withContext(dispatcher) {
             try {
                 val chatsData = chatsAPI.getChats(token)
                 if (chatsData.status == "ok")
-                    Success(decrypt(mapChats(chatsData.result.items)), true)
+                    Success(decrypt(chatResponseMapper.fromChatResponseToChat(chatsData.result.items)), true)
                 else
                     Failure(chatsData.message)
             } catch (e: Exception) {
@@ -35,7 +34,7 @@ class MainChatsRemoteDataSource @Inject constructor(
         }
 
 
-    override suspend fun archiveChats(token: String, chats: List<ChatItem>): Result<String> =
+    override suspend fun archiveChats(token: String, chats: List<Chat>): Result<String> =
         withContext(dispatcher) {
             try {
                 if (chats.size == 1) {
@@ -57,15 +56,9 @@ class MainChatsRemoteDataSource @Inject constructor(
             }
         }
 
-    private fun mapChats(items: List<Chat>): List<ChatItem> {
-        val chats = arrayListOf<ChatItem>()
-        for (i in items)
-            chats.add(ChatMapper.chatToChatItem(i))
-        return chats
-    }
 
-    private fun decrypt(chatsList: List<ChatItem>): List<ChatItem> {
-        val newList = arrayListOf<ChatItem>()
+    private fun decrypt(chatsList: List<Chat>): List<Chat> {
+        val newList = arrayListOf<Chat>()
         for (i in chatsList) {
             val item = i.copy(
                 lastMessage = cryptLib.decryptCipherTextWithRandomIV(

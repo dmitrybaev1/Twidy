@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twidy.R
-import com.example.twidy.data.chats.entities.FavoriteItem
+import com.example.twidy.ui.chats.entities.FavoriteItem
 import com.github.siyamed.shapeimageview.RoundedImageView
 import com.squareup.picasso.Picasso
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section

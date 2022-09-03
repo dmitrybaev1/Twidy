@@ -1,12 +1,12 @@
 package com.example.twidy.chats
 
 import com.example.twidy.R
-import com.example.twidy.data.api.Failure
-import com.example.twidy.data.api.NetworkFailure
-import com.example.twidy.data.api.Success
+import com.example.twidy.domain.Failure
+import com.example.twidy.domain.NetworkFailure
+import com.example.twidy.domain.Success
 import com.example.twidy.ui.chats.ChatsViewModel
-import com.example.twidy.data.chats.entities.ChatItem
-import com.example.twidy.data.chats.entities.FavoriteItem
+import com.example.twidy.ui.chats.entities.ChatItem
+import com.example.twidy.ui.chats.entities.FavoriteItem
 import com.example.twidy.ui.chats.FavoritesType
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest

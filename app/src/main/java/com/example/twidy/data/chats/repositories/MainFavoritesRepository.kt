@@ -1,15 +1,13 @@
 package com.example.twidy.data.chats.repositories
 
-import com.example.twidy.data.api.Failure
-import com.example.twidy.data.api.NetworkFailure
-import com.example.twidy.data.api.Result
-import com.example.twidy.data.api.Success
+import com.example.twidy.domain.Failure
+import com.example.twidy.domain.NetworkFailure
+import com.example.twidy.domain.Result
+import com.example.twidy.domain.Success
 import com.example.twidy.data.chats.datasources.FavoritesLocalDataSource
 import com.example.twidy.data.chats.datasources.FavoritesRemoteDataSource
-import com.example.twidy.data.entities.FavoriteUser
-import com.example.twidy.mappers.FavoriteMapper
-import com.example.twidy.data.chats.entities.FavoriteItem
-import com.example.twidy.utils.InternetChecker
+import com.example.twidy.domain.entities.Favorite
+import com.example.twidy.domain.InternetChecker
 import javax.inject.Inject
 
 class MainFavoritesRepository @Inject constructor(
@@ -17,11 +15,11 @@ class MainFavoritesRepository @Inject constructor(
     private val favoritesRemoteDataSource: FavoritesRemoteDataSource,
     private val internetChecker: InternetChecker
     ): FavoritesRepository {
-    override suspend fun fetchFavorites(token: String): Result<List<FavoriteItem>> {
+    override suspend fun fetchFavorites(token: String): Result<List<Favorite>> {
         return if(internetChecker.isOnline){
             when(val result = favoritesRemoteDataSource.fetchFavorites(token)){
-                is Success<List<FavoriteUser>> -> {
-                    val favorites = mapFavorites(result.data)
+                is Success<List<Favorite>> -> {
+                    val favorites = result.data
                     favoritesLocalDataSource.saveFavorites(favorites)
                     Success(favorites,result.isRemote)
                 }
@@ -33,10 +31,5 @@ class MainFavoritesRepository @Inject constructor(
             Success(favorites, false)
         }
     }
-    private fun mapFavorites(items: List<FavoriteUser>): List<FavoriteItem>{
-        val favorites = arrayListOf<FavoriteItem>()
-        for(i in items)
-            favorites.add(FavoriteMapper.favoriteUserToFavoriteItem(i))
-        return favorites
-    }
+
 }

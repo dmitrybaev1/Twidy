@@ -8,8 +8,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.twidy.R
-import com.example.twidy.data.entities.ResultConfirmData
-import com.example.twidy.di.MainComponent
+import com.example.twidy.data.response.ResultConfirmData
+import com.example.twidy.ui.di.MainComponent
 
 class MainActivity : AppCompatActivity() {
     lateinit var mainComponent: MainComponent

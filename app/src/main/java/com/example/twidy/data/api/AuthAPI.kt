@@ -1,9 +1,9 @@
 package com.example.twidy.data.api
 
-import com.example.twidy.data.entities.AuthData
-import com.example.twidy.data.entities.ConfirmData
-import com.example.twidy.data.entities.LocationData
-import com.example.twidy.data.entities.StaticData
+import com.example.twidy.data.response.AuthData
+import com.example.twidy.data.response.ConfirmData
+import com.example.twidy.data.response.LocationData
+import com.example.twidy.data.response.StaticData
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query

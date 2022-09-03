@@ -10,12 +10,11 @@ import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import com.example.twidy.ui.auth.adapters.PhoneCodeSpinnerAdapter
 import com.example.twidy.R
-import com.example.twidy.data.entities.Country
+import com.example.twidy.data.response.Country
 import com.example.twidy.databinding.ActivityAuthBinding
-import com.example.twidy.di.AuthComponent
+import com.example.twidy.ui.di.AuthComponent
 import com.example.twidy.ui.MainActivity
 import java.util.*
 import kotlin.collections.ArrayList
