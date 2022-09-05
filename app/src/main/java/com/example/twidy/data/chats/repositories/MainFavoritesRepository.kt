@@ -8,6 +8,7 @@ import com.example.twidy.data.chats.datasources.FavoritesLocalDataSource
 import com.example.twidy.data.chats.datasources.FavoritesRemoteDataSource
 import com.example.twidy.domain.entities.Favorite
 import com.example.twidy.domain.InternetChecker
+import com.example.twidy.domain.repositories.FavoritesRepository
 import javax.inject.Inject
 
 class MainFavoritesRepository @Inject constructor(

@@ -1,6 +1,6 @@
 package com.example.twidy.domain.usecases
 
-import com.example.twidy.data.chats.repositories.FavoritesRepository
+import com.example.twidy.domain.repositories.FavoritesRepository
 import javax.inject.Inject
 
 class GetFavoritesUseCase @Inject constructor(private val favoritesRepository: FavoritesRepository) {

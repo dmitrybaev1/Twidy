@@ -1,6 +1,6 @@
 package com.example.twidy.domain.usecases
 
-import com.example.twidy.data.chats.repositories.ChatsRepository
+import com.example.twidy.domain.repositories.ChatsRepository
 import javax.inject.Inject
 
 class GetChatsUseCase @Inject constructor(private val chatsRepository: ChatsRepository) {

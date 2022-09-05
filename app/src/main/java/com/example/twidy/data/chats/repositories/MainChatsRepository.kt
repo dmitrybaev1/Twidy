@@ -7,6 +7,7 @@ import com.example.twidy.data.chats.datasources.ChatsLocalDataSource
 import com.example.twidy.data.chats.datasources.ChatsRemoteDataSource
 import com.example.twidy.domain.entities.Chat
 import com.example.twidy.domain.InternetChecker
+import com.example.twidy.domain.repositories.ChatsRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

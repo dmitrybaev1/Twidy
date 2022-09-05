@@ -1,4 +1,4 @@
-package com.example.twidy.data.chats.repositories
+package com.example.twidy.domain.repositories
 
 import com.example.twidy.domain.Result
 import com.example.twidy.domain.entities.Chat

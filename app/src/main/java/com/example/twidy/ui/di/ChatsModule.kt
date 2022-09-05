@@ -3,8 +3,8 @@ package com.example.twidy.ui.di
 import android.content.Context
 import com.example.twidy.data.api.ChatsAPI
 import com.example.twidy.data.chats.datasources.*
-import com.example.twidy.data.chats.repositories.ChatsRepository
-import com.example.twidy.data.chats.repositories.FavoritesRepository
+import com.example.twidy.domain.repositories.ChatsRepository
+import com.example.twidy.domain.repositories.FavoritesRepository
 import com.example.twidy.data.chats.repositories.MainChatsRepository
 import com.example.twidy.data.chats.repositories.MainFavoritesRepository
 import com.example.twidy.data.database.AppDatabase
