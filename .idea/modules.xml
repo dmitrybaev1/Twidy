@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Twidy.iml" filepath="$PROJECT_DIR$/.idea/modules/Twidy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Twidy.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Twidy.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Twidy.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Twidy.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Twidy.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Twidy.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Twidy.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Twidy.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/Twidy.data.iml" filepath="$PROJECT_DIR$/.idea/modules/data/Twidy.data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/Twidy.data.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/data/Twidy.data.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/Twidy.data.main.iml" filepath="$PROJECT_DIR$/.idea/modules/data/Twidy.data.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/Twidy.data.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/data/Twidy.data.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/Twidy.domain.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/Twidy.domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/Twidy.domain.main.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/Twidy.domain.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/Twidy.domain.test.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/Twidy.domain.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/Twidy.feature.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/Twidy.feature.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/calls/Twidy.feature.calls.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/calls/Twidy.feature.calls.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/calls/Twidy.feature.calls.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/calls/Twidy.feature.calls.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/calls/Twidy.feature.calls.main.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/calls/Twidy.feature.calls.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/calls/Twidy.feature.calls.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/calls/Twidy.feature.calls.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/chats/Twidy.feature.chats.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/chats/Twidy.feature.chats.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/chats/Twidy.feature.chats.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/chats/Twidy.feature.chats.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/chats/Twidy.feature.chats.main.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/chats/Twidy.feature.chats.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/chats/Twidy.feature.chats.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/chats/Twidy.feature.chats.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/recommendations/Twidy.feature.recommendations.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/recommendations/Twidy.feature.recommendations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/recommendations/Twidy.feature.recommendations.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/recommendations/Twidy.feature.recommendations.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/recommendations/Twidy.feature.recommendations.main.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/recommendations/Twidy.feature.recommendations.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/recommendations/Twidy.feature.recommendations.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/recommendations/Twidy.feature.recommendations.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/settings/Twidy.feature.settings.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/settings/Twidy.feature.settings.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/settings/Twidy.feature.settings.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/settings/Twidy.feature.settings.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/settings/Twidy.feature.settings.main.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/settings/Twidy.feature.settings.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature/settings/Twidy.feature.settings.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/feature/settings/Twidy.feature.settings.unitTest.iml" />
+    </modules>
+  </component>
+</project>

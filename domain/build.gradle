@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+    id "org.jetbrains.kotlin.kapt"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies{
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1"
+    def dagger_version = "2.40"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+}

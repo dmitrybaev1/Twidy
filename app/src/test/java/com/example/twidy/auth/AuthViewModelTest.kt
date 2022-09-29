@@ -1,12 +1,11 @@
 package com.example.twidy.auth
 
 import com.example.twidy.R
-import com.example.twidy.domain.Failure
-import com.example.twidy.domain.NetworkFailure
-import com.example.twidy.domain.Success
-import com.example.twidy.data.response.Country
-import com.example.twidy.data.response.Location
-import com.example.twidy.ui.auth.AuthViewModel
+import com.example.twidy.dom.Failure
+import com.example.twidy.dom.NetworkFailure
+import com.example.twidy.dom.Success
+import com.example.twidy.data.response.CountryResponse
+import com.example.twidy.data.response.LocationResponse
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
@@ -27,14 +26,14 @@ class AuthViewModelTest {
             getLocationUseCase = mock()
             authUseCase = mock()
             authConfirmUseCase = mock()
-            setPhoneCountry(Country("Russia",7,"RU"))
+            setPhoneCountry(CountryResponse("Russia",7,"RU"))
             phoneNumber.value = "9998887766"
             codeNumber.value = "777777"
         }
     }
     @Test
     fun `Get countries successfully`() = runTest {
-        val countries = arrayListOf(mock<Country>(),mock())
+        val countries = arrayListOf(mock<CountryResponse>(),mock())
         whenever(viewModel.getCountriesUseCase.invoke()).thenReturn(Success(countries,true))
         viewModel.getCountries()
         assertEquals(2,viewModel.countries.value!!.size)
@@ -56,7 +55,7 @@ class AuthViewModelTest {
 
     @Test
     fun `Get location successfully`() = runTest {
-        whenever(viewModel.getLocationUseCase.invoke()).thenReturn(Success(Location("Russia",7),true))
+        whenever(viewModel.getLocationUseCase.invoke()).thenReturn(Success(LocationResponse("Russia",7),true))
         viewModel.getLocation()
         assertEquals("Russia",viewModel.location.value!!.name)
     }
@@ -100,7 +99,7 @@ class AuthViewModelTest {
     fun `Confirm successfully`() = runTest {
         whenever(viewModel.authConfirmUseCase.invoke(any(),any(),any())).thenReturn(Success(mock(),true))
         viewModel.confirm()
-        assertNotNull(viewModel.confirm.value)
+        assertNotNull(viewModel.token.value)
     }
 
     @Test

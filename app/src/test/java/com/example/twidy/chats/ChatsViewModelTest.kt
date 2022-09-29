@@ -1,13 +1,11 @@
 package com.example.twidy.chats
 
 import com.example.twidy.R
-import com.example.twidy.domain.Failure
-import com.example.twidy.domain.NetworkFailure
-import com.example.twidy.domain.Success
-import com.example.twidy.ui.chats.ChatsViewModel
-import com.example.twidy.ui.chats.entities.ChatItem
-import com.example.twidy.ui.chats.entities.FavoriteItem
-import com.example.twidy.ui.chats.FavoritesType
+import com.example.twidy.dom.Failure
+import com.example.twidy.dom.NetworkFailure
+import com.example.twidy.dom.Success
+import com.example.twidy.chats.entities.ChatItem
+import com.example.twidy.chats.entities.FavoriteItem
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -21,11 +19,11 @@ import org.mockito.kotlin.whenever
 
 class ChatsViewModelTest {
 
-    private lateinit var viewModel: ChatsViewModel
+    private lateinit var viewModel: com.example.twidy.chats.ChatsViewModel
 
     @Before
     fun init(){
-        viewModel = ChatsViewModel()
+        viewModel = com.example.twidy.chats.ChatsViewModel()
         viewModel.apply {
             getChatsUseCase = mock()
             getFavoritesUseCase = mock()
@@ -94,21 +92,21 @@ class ChatsViewModelTest {
     fun `Get favorites successfully`() = runTest {
         val favorites = arrayListOf(mock<FavoriteItem>(), mock(),mock())
         whenever(viewModel.getFavoritesUseCase.invoke(any())).thenReturn(Success(favorites,true))
-        viewModel.fetchFavorites(FavoritesType.ALL)
+        viewModel.fetchFavorites(com.example.twidy.chats.FavoritesType.ALL)
         assertEquals(3,viewModel.favoriteListLiveData.value!!.size)
     }
 
     @Test
     fun `Get favorites api error`() = runTest {
         whenever(viewModel.getFavoritesUseCase.invoke(any())).thenReturn(Failure("api error"))
-        viewModel.fetchFavorites(FavoritesType.ALL)
+        viewModel.fetchFavorites(com.example.twidy.chats.FavoritesType.ALL)
         assertEquals("api error",viewModel.apiError.value)
     }
 
     @Test
     fun `Get favorites network error`() = runTest {
         whenever(viewModel.getFavoritesUseCase.invoke(any())).thenReturn(NetworkFailure)
-        viewModel.fetchFavorites(FavoritesType.ALL)
+        viewModel.fetchFavorites(com.example.twidy.chats.FavoritesType.ALL)
         assertEquals(R.string.favorite_error,viewModel.error.value)
     }
 }

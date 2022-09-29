@@ -5,7 +5,7 @@
     <data>
         <variable
             name="auth"
-            type="com.example.twidy.ui.auth.AuthViewModel" />
+            type="com.example.twidy.auth.AuthViewModel" />
     </data>
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"

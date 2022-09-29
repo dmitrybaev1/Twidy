@@ -14,3 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Twidy"
 include ':app'
+include ':data'
+include ':domain'
+include ':feature:chats'
+include ':feature:calls'
+include ':feature:recommendations'
+include ':feature:settings'

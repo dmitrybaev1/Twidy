@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_recommendations"
-        android:name="com.example.twidy.ui.recommendations.RecommendationsFragment"
+        android:name="com.example.twidy.recommendations.RecommendationsFragment"
         android:label="@string/title_recommends"
         tools:layout="@layout/fragment_recommendations" />
 
     <fragment
         android:id="@+id/navigation_chats"
-        android:name="com.example.twidy.ui.chats.ChatsFragment"
+        android:name="com.example.twidy.chats.ChatsFragment"
         android:label="@string/title_chats"
         tools:layout="@layout/fragment_chats" />
 
     <fragment
         android:id="@+id/navigation_calls"
-        android:name="com.example.twidy.ui.calls.CallsFragment"
+        android:name="com.example.twidy.calls.CallsFragment"
         android:label="@string/title_calls"
         tools:layout="@layout/fragment_calls" />
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.example.twidy.ui.settings.SettingsFragment"
+        android:name="com.example.twidy.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

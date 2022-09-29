@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="1.8">
+      <module name="Twidy.app" target="11" />
+      <module name="Twidy.data" target="11" />
+      <module name="Twidy.feature.calls" target="11" />
+      <module name="Twidy.feature.chats" target="11" />
+      <module name="Twidy.feature.recommendations" target="11" />
+      <module name="Twidy.feature.settings" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
