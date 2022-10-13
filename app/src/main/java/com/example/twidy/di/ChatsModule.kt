@@ -2,7 +2,6 @@ package com.example.twidy.di
 
 import android.content.Context
 import com.example.twidy.data.api.ChatsAPI
-import com.example.twidy.dat.chats.datasources.*
 import com.example.twidy.data.chats.repositories.MainChatsRepository
 import com.example.twidy.data.chats.repositories.MainFavoritesRepository
 import com.example.twidy.data.database.AppDatabase
@@ -17,6 +16,8 @@ import com.example.twidy.domain.repositories.ChatsRepository
 import com.example.twidy.domain.repositories.FavoritesRepository
 import com.example.twidy.chats.mappers.ChatItemMapper
 import com.example.twidy.chats.mappers.FavoriteItemMapper
+import com.example.twidy.data.DefaultInternetChecker
+import com.example.twidy.data.InternetChecker
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

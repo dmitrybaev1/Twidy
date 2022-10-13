@@ -1,6 +1,7 @@
 package com.example.twidy.data.chats.datasources
 
-import com.example.twidy.dom.entities.Chat
+import com.example.twidy.domain.entities.Chat
+import com.example.twidy.domain.Result
 
 interface ChatsRemoteDataSource {
 

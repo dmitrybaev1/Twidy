@@ -1,7 +1,7 @@
 package com.example.twidy.data.chats.mappers
 
 import com.example.twidy.data.response.ChatResponse
-import com.example.twidy.dom.entities.Chat
+import com.example.twidy.domain.entities.Chat
 
 class ChatResponseMapper {
     fun fromChatResponseToChat(chatResponses: List<ChatResponse>): List<Chat>{

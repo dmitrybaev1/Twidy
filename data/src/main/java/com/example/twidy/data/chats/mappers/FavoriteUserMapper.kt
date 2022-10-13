@@ -1,7 +1,7 @@
 package com.example.twidy.data.chats.mappers
 
 import com.example.twidy.data.response.FavoriteUser
-import com.example.twidy.dom.entities.Favorite
+import com.example.twidy.domain.entities.Favorite
 
 class FavoriteUserMapper {
 

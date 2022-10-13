@@ -1,6 +1,5 @@
 package com.example.twidy.data.auth.datasources
 
-import com.example.twidy.dat.api.*
 import com.example.twidy.data.auth.mappers.CountryResponseMapper
 import com.example.twidy.data.auth.mappers.LocationResponseMapper
 import com.example.twidy.data.auth.mappers.TokenResponseMapper
@@ -14,6 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import com.example.twidy.domain.entities.auth.Country
 import com.example.twidy.domain.entities.auth.Token
+import com.example.twidy.domain.Result
 
 class MainAuthDataSource @Inject constructor(
     private val authAPI: AuthAPI,

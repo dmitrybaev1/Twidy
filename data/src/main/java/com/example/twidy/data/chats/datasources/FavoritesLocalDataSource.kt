@@ -1,6 +1,6 @@
 package com.example.twidy.data.chats.datasources
 
-import com.example.twidy.dom.entities.Favorite
+import com.example.twidy.domain.entities.Favorite
 
 interface FavoritesLocalDataSource {
 

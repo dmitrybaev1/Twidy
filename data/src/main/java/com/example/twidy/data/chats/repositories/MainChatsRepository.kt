@@ -1,16 +1,17 @@
 package com.example.twidy.data.chats.repositories
 
-import com.example.twidy.dom.NetworkFailure
-import com.example.twidy.dom.Success
+import com.example.twidy.data.InternetChecker
+import com.example.twidy.domain.NetworkFailure
+import com.example.twidy.domain.Success
 import com.example.twidy.data.chats.datasources.ChatsLocalDataSource
 import com.example.twidy.data.chats.datasources.ChatsRemoteDataSource
-import com.example.twidy.dom.entities.Chat
-import com.example.twidy.dom.InternetChecker
-import com.example.twidy.dom.repositories.ChatsRepository
+import com.example.twidy.domain.entities.Chat
+import com.example.twidy.domain.repositories.ChatsRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
+import com.example.twidy.domain.Result
 
 class MainChatsRepository @Inject constructor(
     private val chatsLocalDataSource: ChatsLocalDataSource,

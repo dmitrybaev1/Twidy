@@ -2,7 +2,7 @@ package com.example.twidy.data.chats.datasources
 
 import com.example.twidy.data.chats.mappers.FavoriteEntityMapper
 import com.example.twidy.data.database.AppDatabase
-import com.example.twidy.dom.entities.Favorite
+import com.example.twidy.domain.entities.Favorite
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

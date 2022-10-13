@@ -1,15 +1,15 @@
 package com.example.twidy.data.chats.datasources
 
-import com.example.twidy.dat.api.*
 import com.example.twidy.data.api.ChatsAPI
 import com.example.twidy.data.chats.mappers.FavoriteUserMapper
-import com.example.twidy.dom.Failure
-import com.example.twidy.dom.NetworkFailure
-import com.example.twidy.dom.Success
-import com.example.twidy.dom.entities.Favorite
+import com.example.twidy.domain.Failure
+import com.example.twidy.domain.NetworkFailure
+import com.example.twidy.domain.Success
+import com.example.twidy.domain.entities.Favorite
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import com.example.twidy.domain.Result
 
 class MainFavoritesRemoteDataSource @Inject constructor(
     private val chatsAPI: ChatsAPI,

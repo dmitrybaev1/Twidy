@@ -6,6 +6,7 @@ import javax.inject.Inject
 import com.example.twidy.domain.repositories.AuthRepository
 import com.example.twidy.domain.entities.auth.Country
 import com.example.twidy.domain.entities.auth.Token
+import com.example.twidy.domain.Result
 
 class MainAuthRepository @Inject constructor(private val authDataSource: AuthDataSource): AuthRepository {
 

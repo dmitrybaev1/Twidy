@@ -1,14 +1,15 @@
 package com.example.twidy.data.chats.repositories
 
-import com.example.twidy.dom.Failure
-import com.example.twidy.dom.NetworkFailure
-import com.example.twidy.dom.Success
+import com.example.twidy.data.InternetChecker
+import com.example.twidy.domain.Failure
+import com.example.twidy.domain.NetworkFailure
+import com.example.twidy.domain.Success
 import com.example.twidy.data.chats.datasources.FavoritesLocalDataSource
 import com.example.twidy.data.chats.datasources.FavoritesRemoteDataSource
-import com.example.twidy.dom.entities.Favorite
-import com.example.twidy.dom.InternetChecker
-import com.example.twidy.dom.repositories.FavoritesRepository
+import com.example.twidy.domain.entities.Favorite
+import com.example.twidy.domain.repositories.FavoritesRepository
 import javax.inject.Inject
+import com.example.twidy.domain.Result
 
 class MainFavoritesRepository @Inject constructor(
     private val favoritesLocalDataSource: FavoritesLocalDataSource,

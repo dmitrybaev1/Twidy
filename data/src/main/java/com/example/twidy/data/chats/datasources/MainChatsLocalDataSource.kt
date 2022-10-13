@@ -2,7 +2,7 @@ package com.example.twidy.data.chats.datasources
 
 import com.example.twidy.data.chats.mappers.ChatEntityMapper
 import com.example.twidy.data.database.AppDatabase
-import com.example.twidy.dom.entities.Chat
+import com.example.twidy.domain.entities.Chat
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

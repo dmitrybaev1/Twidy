@@ -1,7 +1,7 @@
 package com.example.twidy.data.chats.mappers
 
 import com.example.twidy.data.chats.entities.ChatEntity
-import com.example.twidy.dom.entities.Chat
+import com.example.twidy.domain.entities.Chat
 
 class ChatEntityMapper {
 

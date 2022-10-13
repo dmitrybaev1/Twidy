@@ -6,10 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.twidy.data.chats.dao.ChatDao
 import com.example.twidy.data.chats.dao.FavoriteDao
-import com.example.twidy.ui.chats.entities.ChatItem
-import com.example.twidy.ui.chats.entities.FavoriteItem
+import com.example.twidy.data.chats.entities.ChatEntity
+import com.example.twidy.data.chats.entities.FavoriteEntity
 
-@Database(entities = [ChatItem::class, FavoriteItem::class],version = 1)
+@Database(entities = [ChatEntity::class, FavoriteEntity::class],version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun chatDao(): ChatDao
     abstract fun favoriteDao(): FavoriteDao

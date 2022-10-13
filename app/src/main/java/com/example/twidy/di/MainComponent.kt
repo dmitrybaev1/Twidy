@@ -11,5 +11,5 @@ interface MainComponent {
     interface Factory{
         fun create(@BindsInstance context: Context): MainComponent
     }
-    fun inject(chatsViewModel: com.example.twidy.chats.ChatsViewModel)
+    fun inject(chatsViewModel: ChatsViewModel)
 }
